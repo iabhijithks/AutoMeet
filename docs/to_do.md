@@ -1,37 +1,79 @@
 # AutoMeet TODO
 
-## Setup
+---
 
-- [x] Initialize Git
-- [x] Create project structure
-- [x] Create project plan
+# Phase 0 - Planning
+
+- [x] Project Idea
+- [x] Project Planning
+- [x] Git Initialization
+- [x] Folder Structure
+- [x] Project Plan
+- [x] Architecture Design
+- [x] Security Design
+
+---
+
+# Phase 1 - Setup
+
 - [ ] Initialize Electron
-- [ ] Create first window
+- [ ] Install Dependencies
+- [ ] First Window
+- [ ] Basic UI
+- [ ] Package.json
 
-## Settings
+---
+
+# Phase 2 - Settings
 
 - [ ] Config Manager
 - [ ] Settings UI
+- [ ] Save Settings
+- [ ] Load Settings
 
-## Zoom
+---
+
+# Phase 3 - Zoom Automation
 
 - [ ] Launch Zoom
-- [ ] Wait for host
-- [ ] Auto Join
-- [ ] Mute Mic
+- [ ] Detect Zoom
+- [ ] Wait for Host
+- [ ] Join Meeting
+- [ ] Mute Microphone
 - [ ] Disable Camera
 
-## Recording
+---
 
-- [ ] Start OBS
-- [ ] Stop OBS
+# Phase 4 - Recording
 
-## Scheduler
+- [ ] Launch OBS
+- [ ] Start Recording
+- [ ] Stop Recording
+- [ ] Save Recording
 
-- [ ] Daily Scheduler
+---
 
-## Release
+# Phase 5 - Scheduler
 
-- [ ] Package EXE
-- [ ] Write README
-- [ ] Publish to GitHub
+- [ ] Meeting Scheduler
+- [ ] Auto Start
+- [ ] Notifications
+
+---
+
+# Phase 6 - Polish
+
+- [ ] Better UI
+- [ ] Icons
+- [ ] Error Handling
+- [ ] Logging
+- [ ] Testing
+
+---
+
+# Phase 7 - Release
+
+- [ ] README
+- [ ] Screenshots
+- [ ] Build EXE
+- [ ] GitHub Release
