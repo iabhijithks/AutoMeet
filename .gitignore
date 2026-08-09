@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+
+# Environment
+.env
+
+# Recordings
+recordings/
+
+# Personal configuration
+config.json

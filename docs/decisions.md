@@ -77,6 +77,38 @@ Allows development locally while presenting a polished public repository.
 
 Follow modular architecture.
 
+## ADR-007
+
+### Decision
+
+Application settings will eventually be stored in the user's AppData directory instead of inside the project folder.
+
+### Reason
+
+- Follows Windows application standards.
+- Keeps source code separate from user data.
+- Prevents accidental commits of personal configuration.
+- Allows updates without overwriting user settings.
+
+### Current Status
+
+During development, `config.json` may temporarily remain inside the project folder for simplicity.
+
+Before the first public release (v1.0), configuration storage will be migrated to the AppData directory.
+
+## ADR-008
+
+### Decision
+
+The application will generate `config.json` automatically through a Settings page instead of requiring users to edit JSON files manually.
+
+### Reason
+
+- Better user experience.
+- Easier for non-technical users.
+- Eliminates manual configuration errors.
+- Keeps all configuration local while remaining beginner-friendly.
+
 ### Reason
 
 Each module has one responsibility, making the project easier to maintain and extend.

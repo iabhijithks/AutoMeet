@@ -234,6 +234,7 @@ Possible future improvements include:
 - Automatic cleanup of old recordings
 - Dark mode
 - Automatic updates
+- First-run setup wizard for meeting configuration
 
 ---
 
