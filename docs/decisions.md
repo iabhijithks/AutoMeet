@@ -112,3 +112,15 @@ The application will generate `config.json` automatically through a Settings pag
 ### Reason
 
 Each module has one responsibility, making the project easier to maintain and extend.
+
+## IPC Security Pattern
+
+All privileged application operations must be performed in the Electron main process.
+
+The renderer process must access privileged functionality only through narrowly scoped APIs exposed by the preload script using `contextBridge`.
+
+IPC channels must represent specific application operations rather than generic command execution. Inputs received through IPC must be validated in the main process before being used.
+
+The renderer must not receive direct access to Node.js APIs, Electron's `ipcRenderer`, the filesystem, child processes, or arbitrary operating-system commands.
+
+All privileged operations must occur in the Electron main process. Renderer processes may access privileged functionality only through narrowly scoped APIs exposed by the preload script. IPC inputs must be validated by the main process before execution.

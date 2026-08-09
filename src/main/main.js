@@ -1,9 +1,14 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 
-ipcMain.handle("get-app-version", () => {
+const IPC_CHANNELS = {
+    GET_APP_VERSION: "get-app-version"
+};
+
+ipcMain.handle(IPC_CHANNELS.GET_APP_VERSION, () => {
     return app.getVersion();
 });
+
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
