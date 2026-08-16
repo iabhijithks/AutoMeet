@@ -8,12 +8,132 @@
     >
 
     <title>AutoMeet</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
+    <div class="app">
+        <header class="app-header">
+            <div class="app-brand">
+                <div class="app-logo" aria-hidden="true">AM</div>
+                <span class="app-name">AutoMeet</span>
+            </div>
 
-    <h1>AutoMeet</h1>
-    <p>Application is running.</p>
+            <button
+                type="button"
+                class="icon-button"
+                id="settings-button"
+                aria-label="Settings"
+            >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+                        stroke="currentColor"
+                        stroke-width="1.75"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"
+                        stroke="currentColor"
+                        stroke-width="1.75"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </button>
+        </header>
+
+        <main class="dashboard">
+            <section
+                class="card status-card"
+                aria-labelledby="status-heading"
+                data-status="ready"
+            >
+                <div class="status-card__header">
+                    <h2 id="status-heading" class="card-title">Status</h2>
+                    <div class="status-indicator" role="status" aria-live="polite">
+                        <span class="status-indicator__dot" aria-hidden="true"></span>
+                        <span class="status-indicator__label">Ready</span>
+                    </div>
+                </div>
+                <p class="status-message">Waiting for your command</p>
+            </section>
+
+            <section class="card meeting-card" aria-labelledby="meeting-heading">
+                <h2 id="meeting-heading" class="card-title">Upcoming Meeting</h2>
+
+                <div class="meeting-summary">
+                    <h3 class="meeting-name">Web Development</h3>
+                    <p class="meeting-time">Today · 7:00 PM</p>
+                </div>
+
+                <dl class="detail-list">
+                    <div class="detail-row">
+                        <dt>Platform</dt>
+                        <dd>
+                            <span class="badge badge--platform">Zoom</span>
+                        </dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Meeting ID</dt>
+                        <dd class="meeting-id">829 •••• ••••</dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Microphone</dt>
+                        <dd>
+                            <span class="device-state device-state--off">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z" stroke="currentColor" stroke-width="1.75"/>
+                                    <path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v3M8 21h8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                                    <path d="m3 3 18 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                                </svg>
+                                Off
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Camera</dt>
+                        <dd>
+                            <span class="device-state device-state--off">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M2 8.5V17a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                                    <path d="M22 8.5 18 11v2l4 2.5V8.5Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+                                    <path d="m3 3 18 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                                </svg>
+                                Off
+                            </span>
+                        </dd>
+                    </div>
+                </dl>
+            </section>
+
+            <div class="action-area">
+                <button type="button" class="start-button" id="start-now-button">
+                    Start Now
+                </button>
+            </div>
+
+            <section class="card recording-card" aria-labelledby="recording-heading">
+                <h2 id="recording-heading" class="card-title">Recording</h2>
+
+                <dl class="detail-list">
+                    <div class="detail-row">
+                        <dt>Recording software</dt>
+                        <dd>OBS</dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Storage</dt>
+                        <dd>Local</dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Recording location</dt>
+                        <dd class="recording-path">Local AutoMeet recordings folder</dd>
+                    </div>
+                </dl>
+            </section>
+        </main>
+    </div>
 
     <script src="./renderer.js"></script>
 </body>
