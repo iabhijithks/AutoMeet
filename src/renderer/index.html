@@ -19,32 +19,53 @@
                 <span class="app-name">AutoMeet</span>
             </div>
 
-            <button
-                type="button"
-                class="icon-button"
-                id="settings-button"
-                aria-label="Settings"
-            >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path
-                        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
-                        stroke="currentColor"
-                        stroke-width="1.75"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                    <path
-                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"
-                        stroke="currentColor"
-                        stroke-width="1.75"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </button>
+            <div class="header-actions">
+                <button
+                    type="button"
+                    class="icon-button text-button"
+                    id="back-button"
+                    hidden
+                    aria-label="Back to Dashboard"
+                >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                            d="M15 18l-6-6 6-6"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                    Back
+                </button>
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="settings-button"
+                    aria-label="Settings"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                            d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"
+                            stroke="currentColor"
+                            stroke-width="1.75"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+            </div>
         </header>
 
-        <main class="dashboard">
+        <main id="dashboard-view" class="view dashboard">
             <section
                 class="card status-card"
                 aria-labelledby="status-heading"
@@ -132,6 +153,174 @@
                     </div>
                 </dl>
             </section>
+        </main>
+
+        <main id="settings-view" class="view settings" hidden>
+            <h1 class="view-title">Settings</h1>
+
+            <section class="card" aria-labelledby="meeting-config-heading">
+                <h2 id="meeting-config-heading" class="card-title">Meeting Configuration</h2>
+
+                <div class="form-stack">
+                    <div class="form-field">
+                        <label class="form-label" for="meeting-name">Meeting Name</label>
+                        <input
+                            class="form-input"
+                            type="text"
+                            id="meeting-name"
+                            name="meeting-name"
+                            value="Web Development"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label" for="meeting-link">Meeting Link</label>
+                        <input
+                            class="form-input"
+                            type="url"
+                            id="meeting-link"
+                            name="meeting-link"
+                            value="https://zoom.us/j/00000000000"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label" for="meeting-id">Meeting ID</label>
+                        <input
+                            class="form-input form-input--mono"
+                            type="text"
+                            id="meeting-id"
+                            name="meeting-id"
+                            value="829 1234 5678"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label" for="meeting-passcode">Passcode</label>
+                        <input
+                            class="form-input"
+                            type="password"
+                            id="meeting-passcode"
+                            name="meeting-passcode"
+                            placeholder="Demo passcode"
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" aria-labelledby="schedule-heading">
+                <h2 id="schedule-heading" class="card-title">Schedule</h2>
+
+                <div class="form-stack">
+                    <div class="form-field form-field--row">
+                        <div class="form-field__text">
+                            <span class="form-label">Automatic Start</span>
+                            <span class="form-hint">Start the meeting automatically at the scheduled time</span>
+                        </div>
+                        <label class="toggle">
+                            <input
+                                class="toggle__input"
+                                type="checkbox"
+                                id="automatic-start"
+                                name="automatic-start"
+                                checked
+                            >
+                            <span class="toggle__track" aria-hidden="true">
+                                <span class="toggle__thumb"></span>
+                            </span>
+                            <span class="visually-hidden">Enable automatic start</span>
+                        </label>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label" for="meeting-time">Meeting Time</label>
+                        <input
+                            class="form-input"
+                            type="time"
+                            id="meeting-time"
+                            name="meeting-time"
+                            value="19:00"
+                        >
+                    </div>
+
+                    <fieldset class="form-field">
+                        <legend class="form-label">Days of Week</legend>
+                        <div class="days-grid">
+                            <label class="day-option">
+                                <input type="checkbox" name="day-monday" value="monday" checked>
+                                <span>Monday</span>
+                            </label>
+                            <label class="day-option">
+                                <input type="checkbox" name="day-tuesday" value="tuesday" checked>
+                                <span>Tuesday</span>
+                            </label>
+                            <label class="day-option">
+                                <input type="checkbox" name="day-wednesday" value="wednesday" checked>
+                                <span>Wednesday</span>
+                            </label>
+                            <label class="day-option">
+                                <input type="checkbox" name="day-thursday" value="thursday" checked>
+                                <span>Thursday</span>
+                            </label>
+                            <label class="day-option">
+                                <input type="checkbox" name="day-friday" value="friday" checked>
+                                <span>Friday</span>
+                            </label>
+                            <label class="day-option">
+                                <input type="checkbox" name="day-saturday" value="saturday">
+                                <span>Saturday</span>
+                            </label>
+                            <label class="day-option">
+                                <input type="checkbox" name="day-sunday" value="sunday">
+                                <span>Sunday</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+            </section>
+
+            <section class="card" aria-labelledby="settings-recording-heading">
+                <h2 id="settings-recording-heading" class="card-title">Recording</h2>
+
+                <div class="form-stack">
+                    <div class="form-field">
+                        <label class="form-label" for="recording-software">Recording Software</label>
+                        <select class="form-input" id="recording-software" name="recording-software">
+                            <option value="obs" selected>OBS</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label" for="recording-location">Recording Location</label>
+                        <input
+                            class="form-input"
+                            type="text"
+                            id="recording-location"
+                            name="recording-location"
+                            value="Local AutoMeet recordings folder"
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <div class="action-area">
+                <p
+                    id="save-feedback"
+                    class="save-feedback"
+                    role="status"
+                    aria-live="polite"
+                    hidden
+                ></p>
+
+                <button type="button" class="start-button" id="save-settings-button">
+                    Save Settings
+                </button>
+            </div>
         </main>
     </div>
 
