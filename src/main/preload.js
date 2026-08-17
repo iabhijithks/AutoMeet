@@ -5,5 +5,13 @@ contextBridge.exposeInMainWorld("autoMeetAPI", {
 
     getAppVersion: () => {
         return ipcRenderer.invoke("get-app-version");
+    },
+
+    getConfig: () => {
+        return ipcRenderer.invoke("get-config");
+    },
+
+    saveConfig: (config) => {
+        return ipcRenderer.invoke("save-config", config);
     }
 });

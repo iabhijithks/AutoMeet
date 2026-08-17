@@ -81,24 +81,31 @@
                 <p class="status-message">Waiting for your command</p>
             </section>
 
+            <p
+                id="dashboard-config-error"
+                class="config-error"
+                role="alert"
+                hidden
+            ></p>
+
             <section class="card meeting-card" aria-labelledby="meeting-heading">
                 <h2 id="meeting-heading" class="card-title">Upcoming Meeting</h2>
 
                 <div class="meeting-summary">
-                    <h3 class="meeting-name">Web Development</h3>
-                    <p class="meeting-time">Today · 7:00 PM</p>
+                    <h3 class="meeting-name" id="dashboard-meeting-name">—</h3>
+                    <p class="meeting-time" id="dashboard-meeting-time">—</p>
                 </div>
 
                 <dl class="detail-list">
                     <div class="detail-row">
                         <dt>Platform</dt>
                         <dd>
-                            <span class="badge badge--platform">Zoom</span>
+                            <span class="badge badge--platform" id="dashboard-platform">—</span>
                         </dd>
                     </div>
                     <div class="detail-row">
                         <dt>Meeting ID</dt>
-                        <dd class="meeting-id">829 •••• ••••</dd>
+                        <dd class="meeting-id" id="dashboard-meeting-id">—</dd>
                     </div>
                     <div class="detail-row">
                         <dt>Microphone</dt>
@@ -141,7 +148,7 @@
                 <dl class="detail-list">
                     <div class="detail-row">
                         <dt>Recording software</dt>
-                        <dd>OBS</dd>
+                        <dd id="dashboard-recording-software">—</dd>
                     </div>
                     <div class="detail-row">
                         <dt>Storage</dt>
@@ -149,7 +156,7 @@
                     </div>
                     <div class="detail-row">
                         <dt>Recording location</dt>
-                        <dd class="recording-path">Local AutoMeet recordings folder</dd>
+                        <dd class="recording-path" id="dashboard-recording-location">—</dd>
                     </div>
                 </dl>
             </section>
@@ -157,6 +164,13 @@
 
         <main id="settings-view" class="view settings" hidden>
             <h1 class="view-title">Settings</h1>
+
+            <p
+                id="settings-load-error"
+                class="config-error"
+                role="alert"
+                hidden
+            ></p>
 
             <section class="card" aria-labelledby="meeting-config-heading">
                 <h2 id="meeting-config-heading" class="card-title">Meeting Configuration</h2>
@@ -169,7 +183,6 @@
                             type="text"
                             id="meeting-name"
                             name="meeting-name"
-                            value="Web Development"
                             autocomplete="off"
                         >
                     </div>
@@ -181,7 +194,6 @@
                             type="url"
                             id="meeting-link"
                             name="meeting-link"
-                            value="https://zoom.us/j/00000000000"
                             autocomplete="off"
                         >
                     </div>
@@ -193,7 +205,6 @@
                             type="text"
                             id="meeting-id"
                             name="meeting-id"
-                            value="829 1234 5678"
                             autocomplete="off"
                         >
                     </div>
@@ -225,10 +236,9 @@
                             <input
                                 class="toggle__input"
                                 type="checkbox"
-                                id="automatic-start"
-                                name="automatic-start"
-                                checked
-                            >
+                            id="automatic-start"
+                            name="automatic-start"
+                        >
                             <span class="toggle__track" aria-hidden="true">
                                 <span class="toggle__thumb"></span>
                             </span>
@@ -243,7 +253,6 @@
                             type="time"
                             id="meeting-time"
                             name="meeting-time"
-                            value="19:00"
                         >
                     </div>
 
@@ -251,23 +260,23 @@
                         <legend class="form-label">Days of Week</legend>
                         <div class="days-grid">
                             <label class="day-option">
-                                <input type="checkbox" name="day-monday" value="monday" checked>
+                                <input type="checkbox" name="day-monday" value="monday">
                                 <span>Monday</span>
                             </label>
                             <label class="day-option">
-                                <input type="checkbox" name="day-tuesday" value="tuesday" checked>
+                                <input type="checkbox" name="day-tuesday" value="tuesday">
                                 <span>Tuesday</span>
                             </label>
                             <label class="day-option">
-                                <input type="checkbox" name="day-wednesday" value="wednesday" checked>
+                                <input type="checkbox" name="day-wednesday" value="wednesday">
                                 <span>Wednesday</span>
                             </label>
                             <label class="day-option">
-                                <input type="checkbox" name="day-thursday" value="thursday" checked>
+                                <input type="checkbox" name="day-thursday" value="thursday">
                                 <span>Thursday</span>
                             </label>
                             <label class="day-option">
-                                <input type="checkbox" name="day-friday" value="friday" checked>
+                                <input type="checkbox" name="day-friday" value="friday">
                                 <span>Friday</span>
                             </label>
                             <label class="day-option">
@@ -290,7 +299,7 @@
                     <div class="form-field">
                         <label class="form-label" for="recording-software">Recording Software</label>
                         <select class="form-input" id="recording-software" name="recording-software">
-                            <option value="obs" selected>OBS</option>
+                            <option value="obs">OBS</option>
                         </select>
                     </div>
 
@@ -301,7 +310,6 @@
                             type="text"
                             id="recording-location"
                             name="recording-location"
-                            value="Local AutoMeet recordings folder"
                             autocomplete="off"
                         >
                     </div>

@@ -516,12 +516,31 @@ fieldset.form-field > .form-label {
 .save-feedback {
     margin: 0 0 12px;
     padding: 10px 14px;
-    border: 1px solid #fde68a;
     border-radius: var(--radius-sm);
-    background: #fffbeb;
-    color: #92400e;
     font-size: 14px;
     text-align: center;
+}
+
+.save-feedback--success {
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    color: #166534;
+}
+
+.save-feedback--error {
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.config-error {
+    margin: 0;
+    padding: 10px 14px;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-sm);
+    background: #fef2f2;
+    color: #991b1b;
+    font-size: 14px;
 }
 
 .visually-hidden {

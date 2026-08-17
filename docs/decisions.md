@@ -1,126 +1,198 @@
-# Architecture Decisions
+# AutoMeet - Architecture Decisions
 
-This document records important design decisions made during development.
-
----
-
-## ADR-001
-
-### Decision
-
-Build a desktop application instead of a web application.
-
-### Reason
-
-Desktop automation requires access to local Windows applications such as Zoom and OBS.
+This document records important technical and architectural decisions made during development.
 
 ---
 
-## ADR-002
+## ADR-001 — Desktop Application
 
 ### Decision
 
-Use Electron.
+Build AutoMeet as a desktop application instead of a web application.
 
 ### Reason
 
-- JavaScript based
-- Cross platform
-- Large community
-- Good documentation
+AutoMeet needs to interact with local Windows applications such as Zoom and OBS. A desktop application is better suited for local automation.
 
 ---
 
-## ADR-003
+## ADR-002 — Electron
 
 ### Decision
 
-Use local JSON instead of a database.
+Use Electron for the desktop application.
 
 ### Reason
 
-- Simpler
-- Faster
-- Offline
-- More secure
-- No server required
+- JavaScript-based
+- Provides desktop application capabilities
+- Allows separation between UI and privileged operations
+- Works well with the Node.js ecosystem
+- Familiar development environment
 
 ---
 
-## ADR-004
+## ADR-003 — Renderer / Preload / Main Architecture
 
 ### Decision
 
-Use OBS Studio.
+Separate the application into Renderer, Preload, Main Process and Services.
 
 ### Reason
 
-OBS provides better automation support than Xbox Game Bar.
+This keeps the UI separate from privileged operations and makes the application easier to maintain.
+
+The basic flow is:
+
+**Renderer → Preload → IPC → Main Process → Services**
+
+The renderer should never directly access Node.js, the filesystem, child processes or operating-system commands.
+
+## ADR-004 — IPC Security
+
+### Decision
+
+Use narrowly scoped IPC channels for privileged operations.
+
+### Reason
+
+The renderer is UI code and should not receive unrestricted access to Electron or Node.js APIs.
+
+Each privileged operation should have:
+
+- A specific IPC channel
+- A specific preload API
+- Input validation in the main process
+
+Current Electron security settings include:
+
+- `contextIsolation: true`
+- `nodeIntegration: false`
+- `sandbox: true`
 
 ---
 
-## ADR-005
+## ADR-005 — Local JSON Configuration
 
 ### Decision
 
-Push to GitHub after the project reaches a stable state.
+Use a local JSON configuration file instead of a database.
 
 ### Reason
 
-Allows development locally while presenting a polished public repository.
+AutoMeet has relatively simple configuration data.
+
+JSON provides:
+
+- Simplicity
+- Easy debugging
+- No database dependency
+- Offline operation
+- Easy maintenance
+
+The configuration contains meeting, schedule and recording settings.
 
 ---
 
-## ADR-006
+## ADR-006 — Store Configuration in User Data
 
 ### Decision
 
-Follow modular architecture.
+Store the user's configuration in Electron's application user-data directory rather than the project directory.
 
-## ADR-007
+### Reason
+
+This:
+
+- Keeps personal configuration separate from source code
+- Prevents accidental Git commits
+- Allows different users to have different configurations
+- Allows application updates without overwriting user settings
+
+The configuration is generated and managed by the application.
+
+## ADR-007 — Settings UI
 
 ### Decision
 
-Application settings will eventually be stored in the user's AppData directory instead of inside the project folder.
+Users configure meetings through the application's Settings page instead of manually editing `config.json`.
 
 ### Reason
 
-- Follows Windows application standards.
-- Keeps source code separate from user data.
-- Prevents accidental commits of personal configuration.
-- Allows updates without overwriting user settings.
+A graphical settings page is easier and safer for users than manually editing JSON.
 
-### Current Status
+The Settings page allows configuration of:
 
-During development, `config.json` may temporarily remain inside the project folder for simplicity.
+- Meeting name
+- Meeting link
+- Meeting ID
+- Passcode
+- Schedule
+- Recording settings
 
-Before the first public release (v1.0), configuration storage will be migrated to the AppData directory.
+---
 
-## ADR-008
+## ADR-008 — OBS for Recording
 
 ### Decision
 
-The application will generate `config.json` automatically through a Settings page instead of requiring users to edit JSON files manually.
+Use OBS Studio for recording automation.
 
 ### Reason
 
-- Better user experience.
-- Easier for non-technical users.
-- Eliminates manual configuration errors.
-- Keeps all configuration local while remaining beginner-friendly.
+OBS provides better automation capabilities and flexibility for the planned recording workflow than relying on Windows Game Bar.
+
+---
+
+## ADR-009 — Local-First Design
+
+### Decision
+
+AutoMeet will not use an AutoMeet backend or cloud database.
 
 ### Reason
 
-Each module has one responsibility, making the project easier to maintain and extend.
+The application is intended to keep configuration and recordings on the user's computer.
 
-## IPC Security Pattern
+User-specific data should remain local.
 
-All privileged application operations must be performed in the Electron main process.
+---
 
-The renderer process must access privileged functionality only through narrowly scoped APIs exposed by the preload script using `contextBridge`.
+## ADR-010 — Git and Personal Data
 
-IPC channels must represent specific application operations rather than generic command execution. Inputs received through IPC must be validated in the main process before being used.
+### Decision
 
-The renderer must not receive direct access to Node.js APIs, Electron's `ipcRenderer`, the filesystem, child processes, or arbitrary operating-system commands.
+Personal configuration and recordings must not be committed to Git.
 
-All privileged operations must occur in the Electron main process. Renderer processes may access privileged functionality only through narrowly scoped APIs exposed by the preload script. IPC inputs must be validated by the main process before execution.
+### Reason
+
+The repository should contain the application, not the developer's personal meeting information or recordings.
+
+`.gitignore` therefore excludes:
+
+- `config.json`
+- `recordings/`
+- `.env`
+- `node_modules/`
+- Log files
+
+---
+
+## ADR-011 — Modular Services
+
+### Decision
+
+Application features should be implemented as independent services.
+
+### Reason
+
+Each service should have a single responsibility.
+
+For example:
+
+- Configuration → `config-service.js`
+- Zoom → future Zoom service
+- Recording → future recording service
+- Scheduling → future scheduler service
+
+This makes the application easier to test, debug and extend.

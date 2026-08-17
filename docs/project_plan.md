@@ -1,341 +1,193 @@
 # AutoMeet - Project Plan
 
-Version: v0.1.0
-
-Status: Planning Phase
-
-Author: Abhijith K S
+**Version:** v0.1.0  
+**Status:** Active Development
 
 ---
 
-# 1. Project Overview
+## 1. Project Overview
 
-AutoMeet is a privacy-first Windows desktop application that automatically joins scheduled online meetings and records them for personal study.
+AutoMeet is a privacy-first Windows desktop application that automates joining scheduled online meetings and recording them locally.
 
-The initial version is being developed specifically for automatically joining a daily Zoom class, waiting for the host if necessary, joining with the microphone muted and camera turned off, and automatically recording the meeting locally using OBS Studio.
+The initial goal is to automate a daily Zoom meeting:
 
-The application is designed to be fully offline, lightweight, secure, and easy to use.
-
-Future versions may support multiple meetings and other platforms such as Google Meet and Microsoft Teams.
-
----
-
-# 2. Problem Statement
-
-I attend a Zoom class at 7:00 PM.
-
-Due to heavy traffic while returning home from college, I sometimes:
-
-- Reach home late
-- Miss attendance
-- Miss important concepts taught at the beginning
-- Have to wait several days until the tutor uploads the recording
-
-I wanted an application that could automatically join the meeting and start recording while I am still travelling so that I never miss the beginning of the class.
-
----
-
-# 3. Goals
-
-The primary goals of AutoMeet are:
-
-- Completely automate joining the meeting
-- Automatically wait if the host has not started the meeting
+- Open/join the configured meeting
+- Wait for the host if necessary
 - Join with microphone muted
-- Join with camera turned off
-- Automatically start recording
+- Join with camera disabled
+- Start recording using OBS
 - Save recordings locally
-- Keep everything completely offline
-- Be simple, lightweight and reliable
+- Display the current application status
+
+AutoMeet is designed to run locally without an AutoMeet backend or cloud service.
+
+## 2. Technology Stack
+
+- **Language:** JavaScript
+- **Desktop Framework:** Electron
+- **Runtime:** Node.js
+- **Recording:** OBS Studio
+- **Version Control:** Git
+- **Repository:** GitHub
+- **IDE:** Cursor
+
+## 3. Architecture
+
+AutoMeet uses a secure Electron architecture:
+
+**Renderer → Preload → IPC → Main Process → Services**
+
+### Renderer
+
+Handles:
+
+- Dashboard UI
+- Settings UI
+- User interaction
+- Displaying application state
+
+The renderer does not directly access Node.js or the filesystem.
+
+### Preload
+
+Provides a controlled API between the renderer and main process using Electron's `contextBridge`.
+
+### Main Process
+
+Handles:
+
+- Application lifecycle
+- IPC
+- Privileged operations
+- Communication with services
+
+### Services
+
+Independent modules handle specific responsibilities.
+
+Current service:
+
+- `config-service.js`
+
+Planned services:
+
+- Zoom controller
+- Recording controller
+- Scheduler
 
 ---
 
-# 4. Project Philosophy
+## 4. Current Project Structure
 
-AutoMeet follows the following principles.
-
-## Privacy First
-
-User data belongs only to the user.
-
-Nothing should ever leave the computer.
-
-## Local First
-
-Everything must run locally.
-
-No cloud services.
-
-No backend.
-
-No internet communication except what Zoom itself requires.
-
-## Simplicity
-
-The application should be easy to use.
-
-One click should perform all required actions.
-
-## Modularity
-
-Each feature should exist as an independent module.
-
-This makes the project easier to maintain and extend.
-
----
-
-# 5. Functional Requirements
-
-## Version 1
-
-The application should be able to:
-
-- Open Zoom automatically
-- Join a predefined meeting
-- Wait if the host has not started the meeting
-- Automatically join once available
-- Ensure microphone is muted
-- Ensure camera is disabled
-- Start OBS recording
-- Save recordings locally
-- Display current status
-
----
-
-# 6. Non-Functional Requirements
-
-The application must be:
-
-- Fully local
-- Secure
-- Lightweight
-- Reliable
-- Easy to maintain
-- Beginner-friendly codebase
-- Open source
-- Modular
-- Well documented
-
----
-
-# 7. Security Requirements
-
-AutoMeet should never:
-
-- Upload any information
-- Send analytics
-- Send telemetry
-- Store data online
-- Require user accounts
-- Require cloud storage
-- Store passwords remotely
-
-Meeting information must remain on the user's computer.
-
-Configuration should be stored locally.
-
----
-
-# 8. Technology Stack
-
-Programming Language
-
-- JavaScript
-
-Desktop Framework
-
-- Electron
-
-Runtime
-
-- Node.js
-
-Recording
-
-- OBS Studio
-
-Version Control
-
-- Git
-
-Repository Hosting
-
-- GitHub
-
-Development Environment
-
-- Cursor IDE
-
----
-
-# 9. Project Architecture
-
-The application will consist of several independent modules.
-
-UI
-
-↓
-
-Settings Manager
-
-↓
-
-Meeting Scheduler
-
-↓
-
-Zoom Controller
-
-↓
-
-Recording Controller
-
-↓
-
-Utility Functions
-
-Each module should have a single responsibility.
-
----
-
-# 10. Planned Folder Structure
+The project currently follows this structure:
 
 AutoMeet/
+- docs/
+  - decisions.md
+  - project_plan.md
+- src/
+  - main/
+    - main.js
+    - preload.js
+    - services/
+      - config-service.js
+  - renderer/
+    - index.html
+    - renderer.js
+    - style.css
+- .gitignore
+- package.json
+- package-lock.json
 
-docs/
-
-assets/
-
-recordings/
-
-src/
-
-README.md
-
-.gitignore
-
-package.json
-
----
-
-# 11. Future Features
-
-Possible future improvements include:
-
-- Multiple meetings
-- Google Meet support
-- Microsoft Teams support
-- Daily scheduler
-- Calendar integration
-- System tray support
-- Windows startup
-- Notifications
-- Meeting history
-- Automatic cleanup of old recordings
-- Dark mode
-- Automatic updates
-- First-run setup wizard for meeting configuration
+User-specific configuration and recordings are excluded from Git.
 
 ---
 
-# 12. Development Workflow
+## 5. Development Phases
 
-Every feature will follow the same process.
+### Phase 0 — Foundation
 
-Design
+- [x] Project planning
+- [x] Git initialization
+- [x] Folder structure
+- [x] Architecture design
+- [x] Security design
 
-↓
+### Phase 1 — Application Foundation & Settings
 
-Implementation
+- [x] Initialize Electron
+- [x] First application window
+- [x] Secure BrowserWindow configuration
+- [x] Preload bridge
+- [x] Context isolation
+- [x] Disabled Node integration
+- [x] IPC security pattern
+- [x] Dashboard UI
+- [x] Settings UI
+- [x] Dashboard ↔ Settings navigation
+- [x] Configuration service
+- [x] Configuration validation
+- [x] Save settings
+- [x] Load settings
+- [x] Local configuration storage
 
-↓
+### Phase 2 — Zoom Automation
 
-Testing
+- [ ] Launch Zoom
+- [ ] Detect Zoom
+- [ ] Open configured meeting
+- [ ] Wait for host
+- [ ] Join meeting
+- [ ] Mute microphone
+- [ ] Disable camera
+- [ ] Detect meeting state
 
-↓
+### Phase 3 — Recording
 
-Local Git Commit
+- [ ] Launch OBS
+- [ ] Start recording
+- [ ] Detect recording state
+- [ ] Stop recording
+- [ ] Verify local recording
 
-↓
+### Phase 4 — Scheduler
 
-Documentation Update
+- [ ] Meeting scheduler
+- [ ] Automatic start
+- [ ] Scheduled recording
+- [ ] Notifications
 
-↓
+### Phase 5 — Reliability & Polish
 
-Next Feature
+- [ ] Error handling
+- [ ] Better status display
+- [ ] Logging
+- [ ] UI improvements
+- [ ] Testing
+- [ ] Edge-case handling
 
----
+### Phase 6 — Release
 
-# 13. Git Strategy
+- [ ] Final testing
+- [ ] README
+- [ ] Screenshots
+- [ ] Build Windows executable
+- [ ] GitHub release
 
-Development will happen locally.
+## 6. Development Workflow
 
-Small commits will be created after every completed feature.
+For each major feature:
 
-The repository will be pushed to GitHub once the project reaches a stable and polished state.
+**Design → Implement → Test → Review → Document → Commit**
 
----
-
-# 14. Version Roadmap
-
-v0.1.0
-
-Project setup
-
-v0.2.0
-
-Electron application
-
-v0.3.0
-
-Settings manager
-
-v0.4.0
-
-Zoom automation
-
-v0.5.0
-
-Meeting detection
-
-v0.6.0
-
-OBS integration
-
-v0.7.0
-
-Scheduler
-
-v0.8.0
-
-UI improvements
-
-v0.9.0
-
-Testing and bug fixes
-
-v1.0.0
-
-First public release
-
----
-
-# 15. Success Criteria
-
-The project will be considered successful when:
-
-- The application launches successfully.
-- Automatically joins the Zoom meeting.
-- Waits if the host has not started.
-- Joins with microphone muted.
-- Joins with camera disabled.
-- Starts recording automatically.
-- Saves recordings locally.
-- Requires only one click (or automatic scheduling) from the user.
-- Operates without any cloud services or backend.
+Git commits should represent meaningful completed checkpoints.
 
 ---
 
-# 16. License
+## 7. Final Goal
 
-The project is intended to be released as open source after reaching a stable version.
+The finished application should allow the user to configure a meeting once and then use **Start Now** or the scheduler to:
+
+**Start recording → Open/join meeting → Handle waiting → Join with correct audio/video settings → Continue recording locally**
+
+The application should remain local, secure, maintainable, and easy to understand.
