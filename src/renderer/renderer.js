@@ -24,48 +24,73 @@ const DAY_LABELS = {
 };
 
 let saveFeedbackTimeout = null;
+
 let meetingStatusMonitor = null;
 
 window.addEventListener("DOMContentLoaded", async () => {
     const appName = window.autoMeetAPI.getAppName();
-    const appVersion = await window.autoMeetAPI.getAppVersion();
+
+    const appVersion =
+        await window.autoMeetAPI.getAppVersion();
 
     console.log("Application:", appName);
+
     console.log("Version:", appVersion);
 
     initNavigation();
+
     initDashboard();
+
     initSettings();
 
     await loadDashboardConfig();
 });
 
 function initNavigation() {
-    const settingsButton = document.getElementById("settings-button");
-    const backButton = document.getElementById("back-button");
+    const settingsButton =
+        document.getElementById("settings-button");
+
+    const backButton =
+        document.getElementById("back-button");
 
     if (settingsButton) {
-        settingsButton.addEventListener("click", async () => {
-            showView(VIEWS.settings);
-            await loadSettingsForm();
-        });
+        settingsButton.addEventListener(
+            "click",
+            async () => {
+                showView(VIEWS.settings);
+
+                await loadSettingsForm();
+            }
+        );
     }
 
     if (backButton) {
-        backButton.addEventListener("click", async () => {
-            showView(VIEWS.dashboard);
-            await loadDashboardConfig();
-        });
+        backButton.addEventListener(
+            "click",
+            async () => {
+                showView(VIEWS.dashboard);
+
+                await loadDashboardConfig();
+            }
+        );
     }
 }
 
 function showView(viewName) {
-    const dashboardView = document.getElementById("dashboard-view");
-    const settingsView = document.getElementById("settings-view");
-    const settingsButton = document.getElementById("settings-button");
-    const backButton = document.getElementById("back-button");
+    const dashboardView =
+        document.getElementById("dashboard-view");
 
-    const isDashboard = viewName === VIEWS.dashboard;
+    const settingsView =
+        document.getElementById("settings-view");
+
+    const settingsButton =
+        document.getElementById("settings-button");
+
+    const backButton =
+        document.getElementById("back-button");
+
+    const isDashboard =
+        viewName === VIEWS.dashboard;
 
     if (dashboardView) {
         dashboardView.hidden = !isDashboard;
@@ -85,30 +110,45 @@ function showView(viewName) {
 }
 
 function initDashboard() {
-    const startButton = document.getElementById("start-now-button");
+    const startButton =
+        document.getElementById("start-now-button");
 
     if (startButton) {
-        startButton.addEventListener("click", handleStartNowClick);
+        startButton.addEventListener(
+            "click",
+            handleStartNowClick
+        );
     }
 }
 
 function initSettings() {
-    const meetingLinkInput = document.getElementById("meeting-link");
-    const meetingIdInput = document.getElementById("meeting-id");
+    const meetingLinkInput =
+        document.getElementById("meeting-link");
+
+    const meetingIdInput =
+        document.getElementById("meeting-id");
 
     if (meetingLinkInput && meetingIdInput) {
-        meetingLinkInput.addEventListener("input", () => {
-            const extractedMeetingId = extractMeetingId(
-                meetingLinkInput.value
-            );
+        meetingLinkInput.addEventListener(
+            "input",
+            () => {
+                const extractedMeetingId =
+                    extractMeetingId(
+                        meetingLinkInput.value
+                    );
 
-            if (extractedMeetingId) {
-                meetingIdInput.value = extractedMeetingId;
+                if (extractedMeetingId) {
+                    meetingIdInput.value =
+                        extractedMeetingId;
+                }
             }
-        });
+        );
     }
 
-    const saveButton = document.getElementById("save-settings-button");
+    const saveButton =
+        document.getElementById(
+            "save-settings-button"
+        );
 
     if (saveButton) {
         saveButton.addEventListener(
@@ -119,10 +159,13 @@ function initSettings() {
 }
 
 async function loadDashboardConfig() {
-    hideConfigError("dashboard-config-error");
+    hideConfigError(
+        "dashboard-config-error"
+    );
 
     try {
-        const config = await window.autoMeetAPI.getConfig();
+        const config =
+            await window.autoMeetAPI.getConfig();
 
         applyDashboardConfig(config);
     } catch (error) {
@@ -139,10 +182,13 @@ async function loadDashboardConfig() {
 }
 
 async function loadSettingsForm() {
-    hideConfigError("settings-load-error");
+    hideConfigError(
+        "settings-load-error"
+    );
 
     try {
-        const config = await window.autoMeetAPI.getConfig();
+        const config =
+            await window.autoMeetAPI.getConfig();
 
         applySettingsForm(config);
     } catch (error) {
@@ -164,47 +210,96 @@ function applyDashboardConfig(config) {
 
     setTextContent(
         "dashboard-meeting-time",
-        formatScheduleDisplay(config.schedule)
+        formatScheduleDisplay(
+            config.schedule
+        )
     );
 
     setTextContent(
         "dashboard-platform",
-        detectPlatform(config.meeting.link)
+        detectPlatform(
+            config.meeting.link
+        )
     );
 
     setTextContent(
         "dashboard-meeting-id",
-        maskMeetingId(config.meeting.meetingId)
+        maskMeetingId(
+            config.meeting.meetingId
+        )
     );
 
     setTextContent(
         "dashboard-recording-software",
-        formatRecordingSoftware(config.recording.software)
+        formatRecordingSoftware(
+            config.recording.software
+        )
     );
 
     setTextContent(
         "dashboard-recording-location",
-        config.recording.location || "Configured in OBS"
+        config.recording.location ||
+            "Configured in OBS"
     );
 }
 
 function clearDashboardConfig() {
-    setTextContent("dashboard-meeting-name", "—");
-    setTextContent("dashboard-meeting-time", "—");
-    setTextContent("dashboard-platform", "—");
-    setTextContent("dashboard-meeting-id", "—");
-    setTextContent("dashboard-recording-software", "—");
-    setTextContent("dashboard-recording-location", "—");
+    setTextContent(
+        "dashboard-meeting-name",
+        "—"
+    );
+
+    setTextContent(
+        "dashboard-meeting-time",
+        "—"
+    );
+
+    setTextContent(
+        "dashboard-platform",
+        "—"
+    );
+
+    setTextContent(
+        "dashboard-meeting-id",
+        "—"
+    );
+
+    setTextContent(
+        "dashboard-recording-software",
+        "—"
+    );
+
+    setTextContent(
+        "dashboard-recording-location",
+        "—"
+    );
 }
 
 function applySettingsForm(config) {
-    setInputValue("meeting-name", config.meeting.name);
-    setInputValue("meeting-link", config.meeting.link);
-    setInputValue("meeting-id", config.meeting.meetingId);
-    setInputValue("meeting-passcode", config.meeting.passcode);
+    setInputValue(
+        "meeting-name",
+        config.meeting.name
+    );
+
+    setInputValue(
+        "meeting-link",
+        config.meeting.link
+    );
+
+    setInputValue(
+        "meeting-id",
+        config.meeting.meetingId
+    );
+
+    setInputValue(
+        "meeting-passcode",
+        config.meeting.passcode
+    );
 
     const automaticStart =
-        document.getElementById("automatic-start");
+        document.getElementById(
+            "automatic-start"
+        );
 
     if (automaticStart) {
         automaticStart.checked = Boolean(
@@ -212,8 +307,14 @@ function applySettingsForm(config) {
         );
     }
 
-    setInputValue("meeting-time", config.schedule.time);
-    setDayCheckboxes(config.schedule.days);
+    setInputValue(
+        "meeting-time",
+        config.schedule.time
+    );
+
+    setDayCheckboxes(
+        config.schedule.days
+    );
 
     setInputValue(
         "recording-software",
@@ -224,15 +325,51 @@ function applySettingsForm(config) {
         "recording-location",
         config.recording.location
     );
+
+    const obsPasswordInput =
+        document.getElementById(
+            "obs-websocket-password"
+        );
+
+    if (obsPasswordInput) {
+        obsPasswordInput.value = "";
+
+        window.autoMeetAPI
+            .hasOBSWebSocketPassword()
+            .then((hasPassword) => {
+                if (hasPassword) {
+                    obsPasswordInput.placeholder =
+                        "Password saved securely";
+                } else {
+                    obsPasswordInput.placeholder =
+                        "Enter OBS WebSocket password";
+                }
+            })
+            .catch(() => {
+                obsPasswordInput.placeholder =
+                    "Enter OBS WebSocket password";
+            });
+    }
 }
 
 function collectSettingsForm() {
     return {
         meeting: {
-            name: getInputValue("meeting-name"),
-            link: getInputValue("meeting-link"),
-            meetingId: getInputValue("meeting-id"),
-            passcode: getInputValue("meeting-passcode")
+            name: getInputValue(
+                "meeting-name"
+            ),
+
+            link: getInputValue(
+                "meeting-link"
+            ),
+
+            meetingId: getInputValue(
+                "meeting-id"
+            ),
+
+            passcode: getInputValue(
+                "meeting-passcode"
+            )
         },
 
         schedule: {
@@ -242,7 +379,10 @@ function collectSettingsForm() {
                 )?.checked
             ),
 
-            time: getInputValue("meeting-time"),
+            time: getInputValue(
+                "meeting-time"
+            ),
+
             days: getSelectedDays()
         },
 
@@ -261,13 +401,18 @@ function collectSettingsForm() {
 function getSelectedDays() {
     const selectedDays = [];
 
-    for (const checkboxName of DAY_CHECKBOX_NAMES) {
-        const checkbox = document.querySelector(
-            `input[name="${checkboxName}"]`
-        );
+    for (
+        const checkboxName of DAY_CHECKBOX_NAMES
+    ) {
+        const checkbox =
+            document.querySelector(
+                `input[name="${checkboxName}"]`
+            );
 
         if (checkbox?.checked) {
-            selectedDays.push(checkbox.value);
+            selectedDays.push(
+                checkbox.value
+            );
         }
     }
 
@@ -279,22 +424,28 @@ function setDayCheckboxes(days) {
         Array.isArray(days) ? days : []
     );
 
-    for (const checkboxName of DAY_CHECKBOX_NAMES) {
-        const checkbox = document.querySelector(
-            `input[name="${checkboxName}"]`
-        );
+    for (
+        const checkboxName of DAY_CHECKBOX_NAMES
+    ) {
+        const checkbox =
+            document.querySelector(
+                `input[name="${checkboxName}"]`
+            );
 
         if (checkbox) {
-            checkbox.checked = selectedDays.has(
-                checkbox.value
-            );
+            checkbox.checked =
+                selectedDays.has(
+                    checkbox.value
+                );
         }
     }
 }
 
 async function handleStartNowClick() {
     const startButton =
-        document.getElementById("start-now-button");
+        document.getElementById(
+            "start-now-button"
+        );
 
     stopMeetingStatusMonitor();
 
@@ -304,7 +455,10 @@ async function handleStartNowClick() {
         "Opening your configured Zoom meeting..."
     );
 
-    setStartButtonState(true, "Opening Zoom...");
+    setStartButtonState(
+        true,
+        "Opening Zoom..."
+    );
 
     setRecordingState("idle");
 
@@ -320,16 +474,22 @@ async function handleStartNowClick() {
          * so the UI can move from "Opening Zoom" to "Joining"
          * without changing the working backend.
          */
-        await monitorStartupProgress(meetingPromise);
 
-        const result = await meetingPromise;
+        await monitorStartupProgress(
+            meetingPromise
+        );
+
+        const result =
+            await meetingPromise;
 
         console.log(
             "Meeting automation started:",
             result
         );
 
-        if (result?.status === "recording") {
+        if (
+            result?.status === "recording"
+        ) {
             setAutomationStatus(
                 "recording",
                 "Recording",
@@ -371,7 +531,9 @@ async function handleStartNowClick() {
     }
 }
 
-async function monitorStartupProgress(meetingPromise) {
+async function monitorStartupProgress(
+    meetingPromise
+) {
     let finished = false;
 
     meetingPromise.finally(() => {
@@ -381,12 +543,14 @@ async function monitorStartupProgress(meetingPromise) {
     /*
      * Give Zoom a moment to open before checking its state.
      */
+
     await wait(1000);
 
     while (!finished) {
         try {
             const active =
-                await window.autoMeetAPI.isZoomMeetingActive();
+                await window.autoMeetAPI
+                    .isZoomMeetingActive();
 
             if (active) {
                 setAutomationStatus(
@@ -429,56 +593,66 @@ function startMeetingStatusMonitor() {
 
     let missedChecks = 0;
 
-    meetingStatusMonitor = setInterval(
-        async () => {
-            try {
-                const active =
-                    await window.autoMeetAPI.isZoomMeetingActive();
+    meetingStatusMonitor =
+        setInterval(
+            async () => {
+                try {
+                    const active =
+                        await window
+                            .autoMeetAPI
+                            .isZoomMeetingActive();
 
-                if (active) {
-                    missedChecks = 0;
-                    return;
+                    if (active) {
+                        missedChecks = 0;
+
+                        return;
+                    }
+
+                    missedChecks += 1;
+
+                    /*
+                     * Require multiple missed checks so a temporary
+                     * process/title transition doesn't immediately
+                     * mark the meeting as ended.
+                     */
+
+                    if (missedChecks < 3) {
+                        return;
+                    }
+
+                    stopMeetingStatusMonitor();
+
+                    setAutomationStatus(
+                        "ended",
+                        "Meeting ended",
+                        "The meeting has ended. Your recording has been stopped."
+                    );
+
+                    setRecordingState(
+                        "idle"
+                    );
+
+                    setStartButtonState(
+                        false,
+                        "Start Again"
+                    );
+                } catch (error) {
+                    console.warn(
+                        "Meeting status monitor error:",
+                        error
+                    );
                 }
-
-                missedChecks += 1;
-
-                /*
-                 * Require multiple missed checks so a temporary
-                 * process/title transition doesn't immediately
-                 * mark the meeting as ended.
-                 */
-                if (missedChecks < 3) {
-                    return;
-                }
-
-                stopMeetingStatusMonitor();
-
-                setAutomationStatus(
-                    "ended",
-                    "Meeting ended",
-                    "The meeting has ended. Your recording has been stopped."
-                );
-
-                setRecordingState("idle");
-
-                setStartButtonState(
-                    false,
-                    "Start Again"
-                );
-            } catch (error) {
-                console.warn(
-                    "Meeting status monitor error:",
-                    error
-                );
-            }
-        },
-        3000
-    );
+            },
+            3000
+        );
 }
 
 function stopMeetingStatusMonitor() {
     if (meetingStatusMonitor) {
-        clearInterval(meetingStatusMonitor);
+        clearInterval(
+            meetingStatusMonitor
+        );
+
         meetingStatusMonitor = null;
     }
 }
@@ -489,37 +663,51 @@ function setAutomationStatus(
     message
 ) {
     const statusCard =
-        document.getElementById("status-card");
+        document.getElementById(
+            "status-card"
+        );
 
     const statusLabel =
-        document.getElementById("status-label");
+        document.getElementById(
+            "status-label"
+        );
 
     const statusMessage =
-        document.getElementById("status-message");
+        document.getElementById(
+            "status-message"
+        );
 
     if (statusCard) {
-        statusCard.dataset.status = status;
+        statusCard.dataset.status =
+            status;
     }
 
     if (statusLabel) {
-        statusLabel.textContent = label;
+        statusLabel.textContent =
+            label;
     }
 
     if (statusMessage) {
-        statusMessage.textContent = message;
+        statusMessage.textContent =
+            message;
     }
 }
 
 function setRecordingState(state) {
     const recordingState =
-        document.getElementById("recording-state");
+        document.getElementById(
+            "recording-state"
+        );
 
     const recordingLabel =
         document.getElementById(
             "recording-state-label"
         );
 
-    if (!recordingState || !recordingLabel) {
+    if (
+        !recordingState ||
+        !recordingLabel
+    ) {
         return;
     }
 
@@ -533,6 +721,7 @@ function setRecordingState(state) {
 
         recordingLabel.textContent =
             "Recording";
+
         return;
     }
 
@@ -546,12 +735,18 @@ function setRecordingState(state) {
 
 async function syncRecordingState() {
     try {
-        const recording = await window.autoMeetAPI.isRecording();
+        const recording =
+            await window.autoMeetAPI
+                .isRecording();
 
         if (recording) {
-            setRecordingState("recording");
+            setRecordingState(
+                "recording"
+            );
         } else {
-            setRecordingState("idle");
+            setRecordingState(
+                "idle"
+            );
         }
 
         return recording;
@@ -561,13 +756,18 @@ async function syncRecordingState() {
             error
         );
 
-        setRecordingState("idle");
+        setRecordingState(
+            "idle"
+        );
 
         return false;
     }
 }
 
-function setStartButtonState(disabled, label) {
+function setStartButtonState(
+    disabled,
+    label
+) {
     const startButton =
         document.getElementById(
             "start-now-button"
@@ -584,15 +784,18 @@ function setStartButtonState(disabled, label) {
         );
 
     if (startButton) {
-        startButton.disabled = disabled;
+        startButton.disabled =
+            disabled;
     }
 
     if (startButtonLabel) {
-        startButtonLabel.textContent = label;
+        startButtonLabel.textContent =
+            label;
     }
 
     if (spinner) {
-        spinner.hidden = !disabled;
+        spinner.hidden =
+            !disabled;
     }
 }
 
@@ -602,15 +805,41 @@ async function handleSaveSettingsClick() {
             "save-settings-button"
         );
 
-    const config = collectSettingsForm();
+    const config =
+        collectSettingsForm();
+
+    const obsPasswordInput =
+        document.getElementById(
+            "obs-websocket-password"
+        );
+
+    const obsPassword =
+        obsPasswordInput
+            ? obsPasswordInput.value
+            : "";
 
     if (saveButton) {
         saveButton.disabled = true;
-        saveButton.textContent = "Saving...";
+
+        saveButton.textContent =
+            "Saving...";
     }
 
     try {
-        await window.autoMeetAPI.saveConfig(config);
+        await window.autoMeetAPI
+            .saveConfig(config);
+
+        if (obsPassword.length > 0) {
+            await window.autoMeetAPI
+                .saveOBSWebSocketPassword(
+                    obsPassword
+                );
+
+            obsPasswordInput.value = "";
+
+            obsPasswordInput.placeholder =
+                "Password saved securely";
+        }
 
         showSaveFeedback(
             "Settings saved successfully.",
@@ -629,20 +858,29 @@ async function handleSaveSettingsClick() {
     } finally {
         if (saveButton) {
             saveButton.disabled = false;
-            saveButton.textContent = "Save Settings";
+
+            saveButton.textContent =
+                "Save Settings";
         }
     }
 }
 
-function showSaveFeedback(message, type) {
+function showSaveFeedback(
+    message,
+    type
+) {
     const saveFeedback =
-        document.getElementById("save-feedback");
+        document.getElementById(
+            "save-feedback"
+        );
 
     if (!saveFeedback) {
         return;
     }
 
-    saveFeedback.textContent = message;
+    saveFeedback.textContent =
+        message;
+
     saveFeedback.hidden = false;
 
     saveFeedback.classList.remove(
@@ -661,41 +899,60 @@ function showSaveFeedback(message, type) {
     }
 
     if (saveFeedbackTimeout) {
-        clearTimeout(saveFeedbackTimeout);
+        clearTimeout(
+            saveFeedbackTimeout
+        );
     }
 
-    saveFeedbackTimeout = setTimeout(() => {
-        saveFeedback.hidden = true;
-        saveFeedback.textContent = "";
+    saveFeedbackTimeout =
+        setTimeout(() => {
+            saveFeedback.hidden =
+                true;
 
-        saveFeedback.classList.remove(
-            "save-feedback--success",
-            "save-feedback--error"
-        );
-    }, 4000);
+            saveFeedback.textContent =
+                "";
+
+            saveFeedback.classList.remove(
+                "save-feedback--success",
+                "save-feedback--error"
+            );
+        }, 4000);
 }
 
-function showConfigError(elementId, message) {
+function showConfigError(
+    elementId,
+    message
+) {
     const errorElement =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
     if (!errorElement) {
         return;
     }
 
-    errorElement.textContent = message;
+    errorElement.textContent =
+        message;
+
     errorElement.hidden = false;
 }
 
-function hideConfigError(elementId) {
+function hideConfigError(
+    elementId
+) {
     const errorElement =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
     if (!errorElement) {
         return;
     }
 
-    errorElement.textContent = "";
+    errorElement.textContent =
+        "";
+
     errorElement.hidden = true;
 }
 
@@ -712,7 +969,8 @@ function getFriendlyErrorMessage(
         return fallbackMessage;
     }
 
-    const normalized = message.toLowerCase();
+    const normalized =
+        message.toLowerCase();
 
     if (
         normalized.includes(
@@ -736,6 +994,22 @@ function getFriendlyErrorMessage(
         )
     ) {
         return "AutoMeet couldn't detect the Zoom meeting. Make sure the meeting opened correctly and try again.";
+    }
+
+    if (
+        normalized.includes(
+            "obs websocket password is incorrect"
+        )
+    ) {
+        return "The OBS WebSocket password is incorrect. Check your OBS password and AutoMeet Settings.";
+    }
+
+    if (
+        normalized.includes(
+            "obs websocket password is not configured"
+        )
+    ) {
+        return "Add your OBS WebSocket password in Settings first.";
     }
 
     if (
@@ -789,6 +1063,7 @@ function getFriendlyErrorMessage(
     /*
      * Hide low-level Electron IPC wrappers from the UI.
      */
+
     if (
         normalized.includes(
             "error invoking remote method"
@@ -800,34 +1075,52 @@ function getFriendlyErrorMessage(
     return message;
 }
 
-function setTextContent(elementId, value) {
+function setTextContent(
+    elementId,
+    value
+) {
     const element =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
     if (element) {
-        element.textContent = value;
+        element.textContent =
+            value;
     }
 }
 
-function setInputValue(elementId, value) {
+function setInputValue(
+    elementId,
+    value
+) {
     const element =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
     if (element) {
-        element.value = value ?? "";
+        element.value =
+            value ?? "";
     }
 }
 
-function getInputValue(elementId) {
+function getInputValue(
+    elementId
+) {
     const element =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
     return element
         ? element.value.trim()
         : "";
 }
 
-function maskMeetingId(meetingId) {
+function maskMeetingId(
+    meetingId
+) {
     const digits =
         String(meetingId || "")
             .replace(/\D/g, "");
@@ -843,11 +1136,18 @@ function maskMeetingId(meetingId) {
     return `${digits.slice(0, 3)} •••• ••••`;
 }
 
-function detectPlatform(link) {
+function detectPlatform(
+    link
+) {
     const normalizedLink =
-        String(link || "").toLowerCase();
+        String(link || "")
+            .toLowerCase();
 
-    if (normalizedLink.includes("zoom.us")) {
+    if (
+        normalizedLink.includes(
+            "zoom.us"
+        )
+    ) {
         return "Zoom";
     }
 
@@ -870,7 +1170,9 @@ function detectPlatform(link) {
     return "Meeting";
 }
 
-function formatRecordingSoftware(software) {
+function formatRecordingSoftware(
+    software
+) {
     if (software === "obs") {
         return "OBS Studio";
     }
@@ -878,13 +1180,17 @@ function formatRecordingSoftware(software) {
     return software || "—";
 }
 
-function formatScheduleDisplay(schedule) {
+function formatScheduleDisplay(
+    schedule
+) {
     if (!schedule) {
         return "—";
     }
 
     const timeLabel =
-        formatTimeDisplay(schedule.time);
+        formatTimeDisplay(
+            schedule.time
+        );
 
     if (!schedule.enabled) {
         return `Manual · ${timeLabel}`;
@@ -906,13 +1212,16 @@ function formatScheduleDisplay(schedule) {
     const dayLabels =
         days.map(
             (day) =>
-                DAY_LABELS[day] || day
+                DAY_LABELS[day] ||
+                day
         );
 
     return `${dayLabels.join(", ")} · ${timeLabel}`;
 }
 
-function formatTimeDisplay(timeValue) {
+function formatTimeDisplay(
+    timeValue
+) {
     const match =
         /^([01]\d|2[0-3]):([0-5]\d)$/
             .exec(timeValue || "");
@@ -921,8 +1230,11 @@ function formatTimeDisplay(timeValue) {
         return "—";
     }
 
-    const hours = Number(match[1]);
-    const minutes = match[2];
+    const hours =
+        Number(match[1]);
+
+    const minutes =
+        match[2];
 
     const period =
         hours >= 12
@@ -935,7 +1247,9 @@ function formatTimeDisplay(timeValue) {
     return `${hour12}:${minutes} ${period}`;
 }
 
-function extractMeetingId(meetingLink) {
+function extractMeetingId(
+    meetingLink
+) {
     try {
         const url =
             new URL(meetingLink);
@@ -954,7 +1268,12 @@ function extractMeetingId(meetingLink) {
 }
 
 function wait(ms) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
+    return new Promise(
+        (resolve) => {
+            setTimeout(
+                resolve,
+                ms
+            );
+        }
+    );
 }

@@ -1,13 +1,18 @@
 const OBSWebSocket = require("obs-websocket-js").default;
+
 const { execFile } = require("child_process");
+
 const fs = require("fs");
+
 const path = require("path");
+
+const credentialService = require("./credential-service");
 
 const obs = new OBSWebSocket();
 
 const OBS_HOST = "127.0.0.1";
+
 const OBS_PORT = 4455;
-const OBS_PASSWORD = "";
 
 const OBS_PATHS = [
     "C:\\Program Files\\obs-studio\\bin\\64bit\\obs64.exe",
@@ -96,15 +101,26 @@ async function connect() {
         return true;
     }
 
+    const obsPassword =
+        credentialService.getOBSWebSocketPassword();
+
+    if (!obsPassword) {
+        throw new Error(
+            "OBS WebSocket password is not configured."
+        );
+    }
+
     try {
         await obs.connect(
             `ws://${OBS_HOST}:${OBS_PORT}`,
-            OBS_PASSWORD
+            obsPassword
         );
 
         connected = true;
 
-        console.log("[OBS] WebSocket connected.");
+        console.log(
+            "[OBS] WebSocket connected."
+        );
 
         return true;
     } catch (error) {
@@ -115,7 +131,18 @@ async function connect() {
             error.message
         );
 
-        throw new Error("Unable to connect to OBS.");
+        if (
+            error.message ===
+            "Authentication failed."
+        ) {
+            throw new Error(
+                "OBS WebSocket password is incorrect."
+            );
+        }
+
+        throw new Error(
+            "Unable to connect to OBS."
+        );
     }
 }
 
@@ -123,10 +150,15 @@ async function ensureOBSReady() {
     let running = await isOBSRunning();
 
     if (!running) {
-        console.log("[OBS] OBS is not running. Launching...");
+        console.log(
+            "[OBS] OBS is not running. Launching..."
+        );
+
         await launchOBS();
     } else {
-        console.log("[OBS] OBS is already running.");
+        console.log(
+            "[OBS] OBS is already running."
+        );
     }
 
     // Wait for the OBS process to appear.
@@ -150,8 +182,23 @@ async function ensureOBSReady() {
     for (let attempt = 0; attempt < 20; attempt++) {
         try {
             await connect();
+
             return true;
         } catch (error) {
+            if (
+                error.message ===
+                "OBS WebSocket password is incorrect."
+            ) {
+                throw error;
+            }
+
+            if (
+                error.message ===
+                "OBS WebSocket password is not configured."
+            ) {
+                throw error;
+            }
+
             await wait(500);
         }
     }
@@ -184,11 +231,16 @@ async function startRecording() {
     );
 
     if (status.outputActive) {
-        console.log("[OBS] Recording is already active.");
+        console.log(
+            "[OBS] Recording is already active."
+        );
+
         return true;
     }
 
-    console.log("[OBS] Sending StartRecord command...");
+    console.log(
+        "[OBS] Sending StartRecord command..."
+    );
 
     await obs.call("StartRecord");
 
@@ -206,7 +258,10 @@ async function startRecording() {
         );
 
         if (verifyStatus.outputActive) {
-            console.log("[OBS] Recording started successfully.");
+            console.log(
+                "[OBS] Recording started successfully."
+            );
+
             return true;
         }
     }
@@ -227,7 +282,9 @@ async function stopRecording() {
         return true;
     }
 
-    console.log("[OBS] Sending StopRecord command...");
+    console.log(
+        "[OBS] Sending StopRecord command..."
+    );
 
     await obs.call("StopRecord");
 

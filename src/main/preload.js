@@ -38,20 +38,21 @@ contextBridge.exposeInMainWorld("autoMeetAPI", {
     isRecording: () => {
         return ipcRenderer.invoke("is-recording");
     },
-    
-    testOBS: () => {
-        return ipcRenderer.invoke("test-obs");
-    },
-
-    startRecording: () => {
-        return ipcRenderer.invoke("start-recording");
-    },
-
-    stopRecording: () => {
-        return ipcRenderer.invoke("stop-recording");
-    },
 
     isZoomMeetingActive: () => {
         return ipcRenderer.invoke("zoom-is-meeting-active");
+    },
+
+    saveOBSWebSocketPassword: (password) => {
+        return ipcRenderer.invoke(
+            "save-obs-password",
+            password
+        );
+    },
+
+    hasOBSWebSocketPassword: () => {
+        return ipcRenderer.invoke(
+            "has-obs-password"
+        );
     }
 });
