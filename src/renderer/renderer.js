@@ -748,6 +748,14 @@ function getFriendlyErrorMessage(
 
     if (
         normalized.includes(
+            "obs received the recording command, but recording did not start"
+        )
+    ) {
+        return "AutoMeet couldn't start recording in OBS. Check your OBS recording settings and try again.";
+    }
+
+    if (
+        normalized.includes(
             "obs studio was not found"
         )
     ) {
