@@ -51,6 +51,10 @@ ipcMain.handle("test-obs", () => {
     return recordingService.connect();
 });
 
+ipcMain.handle("is-recording", () => {
+    return recordingService.isRecording();
+});
+
 ipcMain.handle("start-recording", () => {
     return recordingService.startRecording();
 });

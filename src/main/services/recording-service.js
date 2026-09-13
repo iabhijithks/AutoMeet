@@ -17,9 +17,7 @@ const OBS_PATHS = [
 let connected = false;
 
 function wait(ms) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function getOBSPath() {
@@ -75,10 +73,6 @@ async function launchOBS() {
             [],
             {
                 windowsHide: false,
-
-                // IMPORTANT:
-                // OBS must start from the directory
-                // containing obs64.exe.
                 cwd: obsBinDirectory
             }
         );
@@ -110,9 +104,16 @@ async function connect() {
 
         connected = true;
 
+        console.log("[OBS] WebSocket connected.");
+
         return true;
     } catch (error) {
         connected = false;
+
+        console.error(
+            "[OBS] WebSocket connection failed:",
+            error.message
+        );
 
         throw new Error("Unable to connect to OBS.");
     }
@@ -122,7 +123,10 @@ async function ensureOBSReady() {
     let running = await isOBSRunning();
 
     if (!running) {
+        console.log("[OBS] OBS is not running. Launching...");
         await launchOBS();
+    } else {
+        console.log("[OBS] OBS is already running.");
     }
 
     // Wait for the OBS process to appear.
@@ -174,13 +178,42 @@ async function startRecording() {
         "GetRecordStatus"
     );
 
+    console.log(
+        "[OBS] Recording before start:",
+        status.outputActive
+    );
+
     if (status.outputActive) {
+        console.log("[OBS] Recording is already active.");
         return true;
     }
 
+    console.log("[OBS] Sending StartRecord command...");
+
     await obs.call("StartRecord");
 
-    return true;
+    // Give OBS a moment to transition into recording.
+    for (let attempt = 0; attempt < 10; attempt++) {
+        await wait(500);
+
+        const verifyStatus = await obs.call(
+            "GetRecordStatus"
+        );
+
+        console.log(
+            `[OBS] Recording check ${attempt + 1}:`,
+            verifyStatus.outputActive
+        );
+
+        if (verifyStatus.outputActive) {
+            console.log("[OBS] Recording started successfully.");
+            return true;
+        }
+    }
+
+    throw new Error(
+        "OBS received the recording command, but recording did not start."
+    );
 }
 
 async function stopRecording() {
@@ -193,6 +226,8 @@ async function stopRecording() {
     if (!status.outputActive) {
         return true;
     }
+
+    console.log("[OBS] Sending StopRecord command...");
 
     await obs.call("StopRecord");
 

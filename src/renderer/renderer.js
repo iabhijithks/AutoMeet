@@ -336,7 +336,7 @@ async function handleStartNowClick() {
                 "Your meeting is active and AutoMeet is recording locally."
             );
 
-            setRecordingState("recording");
+            await syncRecordingState();
 
             setStartButtonState(
                 true,
@@ -542,6 +542,29 @@ function setRecordingState(state) {
 
     recordingLabel.textContent =
         "Not recording";
+}
+
+async function syncRecordingState() {
+    try {
+        const recording = await window.autoMeetAPI.isRecording();
+
+        if (recording) {
+            setRecordingState("recording");
+        } else {
+            setRecordingState("idle");
+        }
+
+        return recording;
+    } catch (error) {
+        console.error(
+            "Unable to check OBS recording status:",
+            error
+        );
+
+        setRecordingState("idle");
+
+        return false;
+    }
 }
 
 function setStartButtonState(disabled, label) {

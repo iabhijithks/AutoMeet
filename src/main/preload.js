@@ -35,6 +35,10 @@ contextBridge.exposeInMainWorld("autoMeetAPI", {
         return ipcRenderer.invoke("start-meeting");
     },
 
+    isRecording: () => {
+        return ipcRenderer.invoke("is-recording");
+    },
+    
     testOBS: () => {
         return ipcRenderer.invoke("test-obs");
     },
