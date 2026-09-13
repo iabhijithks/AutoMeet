@@ -2,22 +2,50 @@
     --color-bg: #f3f4f6;
     --color-surface: #ffffff;
     --color-border: #e5e7eb;
+
     --color-text: #111827;
     --color-text-muted: #6b7280;
     --color-text-subtle: #9ca3af;
+
     --color-primary: #2563eb;
     --color-primary-hover: #1d4ed8;
     --color-primary-active: #1e40af;
-    --color-status-ready: #16a34a;
-    --color-status-ready-bg: #f0fdf4;
-    --color-status-ready-border: #bbf7d0;
+
+    --color-ready: #16a34a;
+    --color-ready-bg: #f0fdf4;
+    --color-ready-border: #bbf7d0;
+
+    --color-progress: #2563eb;
+    --color-progress-bg: #eff6ff;
+    --color-progress-border: #bfdbfe;
+
+    --color-recording: #dc2626;
+    --color-recording-bg: #fef2f2;
+    --color-recording-border: #fecaca;
+
+    --color-ended: #6b7280;
+    --color-ended-bg: #f9fafb;
+    --color-ended-border: #d1d5db;
+
+    --color-error: #dc2626;
+    --color-error-bg: #fef2f2;
+    --color-error-border: #fecaca;
+
     --color-off: #9ca3af;
+
     --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
     --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
-    --font-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --font-sans:
+        "Segoe UI",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
 }
 
 *,
@@ -40,6 +68,18 @@ body {
     background: var(--color-bg);
     -webkit-font-smoothing: antialiased;
 }
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+/* App */
 
 .app {
     display: flex;
@@ -85,6 +125,12 @@ body {
     letter-spacing: -0.01em;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .icon-button {
     display: inline-flex;
     align-items: center;
@@ -97,7 +143,10 @@ body {
     background: var(--color-surface);
     color: var(--color-text-muted);
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease;
 }
 
 .icon-button:hover {
@@ -111,17 +160,10 @@ body {
     outline-offset: 2px;
 }
 
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
 .text-button {
     width: auto;
     padding: 0 14px 0 10px;
     gap: 4px;
-    font-family: inherit;
     font-size: 14px;
     font-weight: 500;
 }
@@ -172,8 +214,58 @@ body {
 /* Status card */
 
 .status-card {
-    border-color: var(--color-status-ready-border);
-    background: linear-gradient(to bottom, var(--color-status-ready-bg), var(--color-surface) 60%);
+    border-color: var(--color-ready-border);
+    background:
+        linear-gradient(
+            to bottom,
+            var(--color-ready-bg),
+            var(--color-surface) 70%
+        );
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.status-card[data-status="opening"],
+.status-card[data-status="joining"],
+.status-card[data-status="recording-starting"] {
+    border-color: var(--color-progress-border);
+    background:
+        linear-gradient(
+            to bottom,
+            var(--color-progress-bg),
+            var(--color-surface) 70%
+        );
+}
+
+.status-card[data-status="recording"] {
+    border-color: var(--color-recording-border);
+    background:
+        linear-gradient(
+            to bottom,
+            var(--color-recording-bg),
+            var(--color-surface) 70%
+        );
+}
+
+.status-card[data-status="ended"] {
+    border-color: var(--color-ended-border);
+    background:
+        linear-gradient(
+            to bottom,
+            var(--color-ended-bg),
+            var(--color-surface) 70%
+        );
+}
+
+.status-card[data-status="error"] {
+    border-color: var(--color-error-border);
+    background:
+        linear-gradient(
+            to bottom,
+            var(--color-error-bg),
+            var(--color-surface) 70%
+        );
 }
 
 .status-card__header {
@@ -194,16 +286,20 @@ body {
     gap: 8px;
     padding: 4px 12px 4px 8px;
     border-radius: 999px;
-    background: var(--color-status-ready-bg);
-    border: 1px solid var(--color-status-ready-border);
+    background: var(--color-ready-bg);
+    border: 1px solid var(--color-ready-border);
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .status-indicator__dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--color-status-ready);
+    background: var(--color-ready);
     flex-shrink: 0;
+    transition: background 0.2s ease;
 }
 
 .status-indicator__label {
@@ -211,6 +307,67 @@ body {
     font-weight: 600;
     color: #15803d;
     letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+}
+
+.status-card[data-status="opening"] .status-indicator,
+.status-card[data-status="joining"] .status-indicator,
+.status-card[data-status="recording-starting"] .status-indicator {
+    background: var(--color-progress-bg);
+    border-color: var(--color-progress-border);
+}
+
+.status-card[data-status="opening"] .status-indicator__dot,
+.status-card[data-status="joining"] .status-indicator__dot,
+.status-card[data-status="recording-starting"] .status-indicator__dot {
+    background: var(--color-progress);
+    animation: status-pulse 1.5s ease-in-out infinite;
+}
+
+.status-card[data-status="opening"] .status-indicator__label,
+.status-card[data-status="joining"] .status-indicator__label,
+.status-card[data-status="recording-starting"] .status-indicator__label {
+    color: #1d4ed8;
+}
+
+.status-card[data-status="recording"] .status-indicator {
+    background: var(--color-recording-bg);
+    border-color: var(--color-recording-border);
+}
+
+.status-card[data-status="recording"] .status-indicator__dot {
+    background: var(--color-recording);
+    animation: status-pulse 1.2s ease-in-out infinite;
+}
+
+.status-card[data-status="recording"] .status-indicator__label {
+    color: #b91c1c;
+}
+
+.status-card[data-status="ended"] .status-indicator {
+    background: var(--color-ended-bg);
+    border-color: var(--color-ended-border);
+}
+
+.status-card[data-status="ended"] .status-indicator__dot {
+    background: var(--color-ended);
+}
+
+.status-card[data-status="ended"] .status-indicator__label {
+    color: #4b5563;
+}
+
+.status-card[data-status="error"] .status-indicator {
+    background: var(--color-error-bg);
+    border-color: var(--color-error-border);
+}
+
+.status-card[data-status="error"] .status-indicator__dot {
+    background: var(--color-error);
+}
+
+.status-card[data-status="error"] .status-indicator__label {
+    color: #b91c1c;
 }
 
 .status-message {
@@ -218,6 +375,19 @@ body {
     font-size: 16px;
     font-weight: 500;
     color: var(--color-text);
+}
+
+@keyframes status-pulse {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.55;
+        transform: scale(0.85);
+    }
 }
 
 /* Meeting card */
@@ -271,7 +441,10 @@ body {
 }
 
 .meeting-id {
-    font-family: "Cascadia Code", "Consolas", monospace;
+    font-family:
+        "Cascadia Code",
+        "Consolas",
+        monospace;
     letter-spacing: 0.06em;
     color: var(--color-text-muted);
 }
@@ -308,27 +481,35 @@ body {
 }
 
 .start-button {
-    display: block;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
     width: 100%;
+    min-height: 54px;
     padding: 16px 24px;
     border: none;
     border-radius: var(--radius-md);
     background: var(--color-primary);
     color: #ffffff;
-    font-family: inherit;
     font-size: 17px;
     font-weight: 600;
     letter-spacing: 0.01em;
     cursor: pointer;
     box-shadow: var(--shadow-md);
-    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease,
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
 }
 
-.start-button:hover {
+.start-button:hover:not(:disabled) {
     background: var(--color-primary-hover);
 }
 
-.start-button:active {
+.start-button:active:not(:disabled) {
     background: var(--color-primary-active);
     transform: translateY(1px);
     box-shadow: var(--shadow-sm);
@@ -339,11 +520,85 @@ body {
     outline-offset: 3px;
 }
 
+.start-button:disabled {
+    opacity: 0.85;
+}
+
+.button-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: button-spin 0.7s linear infinite;
+}
+
+.button-spinner[hidden] {
+    display: none;
+}
+
+@keyframes button-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /* Recording card */
 
+.recording-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.recording-card__header .card-title {
+    margin-bottom: 16px;
+}
+
+.recording-state {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.recording-state__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.recording-state--idle {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+}
+
+.recording-state--idle .recording-state__dot {
+    background: #9ca3af;
+}
+
+.recording-state--active {
+    background: var(--color-recording-bg);
+    border: 1px solid var(--color-recording-border);
+    color: #b91c1c;
+}
+
+.recording-state--active .recording-state__dot {
+    background: var(--color-recording);
+    animation: status-pulse 1.2s ease-in-out infinite;
+}
+
 .recording-path {
-    max-width: 220px;
+    max-width: 260px;
     line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
 /* Settings forms */
@@ -396,6 +651,11 @@ fieldset.form-field > .form-label {
     color: var(--color-text-muted);
 }
 
+.form-hint--block {
+    display: block;
+    margin-top: 6px;
+}
+
 .form-input {
     display: block;
     width: 100%;
@@ -404,21 +664,34 @@ fieldset.form-field > .form-label {
     border-radius: var(--radius-sm);
     background: var(--color-surface);
     color: var(--color-text);
-    font-family: inherit;
     font-size: 14px;
     line-height: 1.4;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
 }
 
 .form-input--mono {
-    font-family: "Cascadia Code", "Consolas", monospace;
+    font-family:
+        "Cascadia Code",
+        "Consolas",
+        monospace;
     letter-spacing: 0.04em;
 }
 
 .form-input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 99, 235, 0.12);
+}
+
+.form-input:disabled {
+    background: #f9fafb;
+    color: var(--color-text-muted);
+    cursor: not-allowed;
 }
 
 .form-input::placeholder {
@@ -431,7 +704,8 @@ fieldset.form-field > .form-label {
     position: relative;
     display: inline-flex;
     flex-shrink: 0;
-    cursor: pointer;
+    cursor: not-allowed;
+    opacity: 0.65;
 }
 
 .toggle__input {
@@ -449,7 +723,6 @@ fieldset.form-field > .form-label {
     padding: 2px;
     border-radius: 999px;
     background: #d1d5db;
-    transition: background 0.15s ease;
 }
 
 .toggle__thumb {
@@ -458,7 +731,6 @@ fieldset.form-field > .form-label {
     border-radius: 50%;
     background: #ffffff;
     box-shadow: var(--shadow-sm);
-    transition: transform 0.15s ease;
 }
 
 .toggle__input:checked + .toggle__track {
@@ -467,11 +739,6 @@ fieldset.form-field > .form-label {
 
 .toggle__input:checked + .toggle__track .toggle__thumb {
     transform: translateX(20px);
-}
-
-.toggle__input:focus-visible + .toggle__track {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
 }
 
 /* Days of week */
@@ -493,7 +760,9 @@ fieldset.form-field > .form-label {
     font-size: 14px;
     color: var(--color-text);
     cursor: pointer;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease;
 }
 
 .day-option:has(input:checked) {
@@ -543,6 +812,8 @@ fieldset.form-field > .form-label {
     font-size: 14px;
 }
 
+/* Accessibility */
+
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -568,6 +839,13 @@ fieldset.form-field > .form-label {
 
     .card {
         padding: 18px 16px;
+    }
+
+    .status-card__header,
+    .recording-card__header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .detail-row {

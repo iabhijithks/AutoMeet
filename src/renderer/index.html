@@ -6,7 +6,6 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
     <title>AutoMeet</title>
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -27,7 +26,13 @@
                     hidden
                     aria-label="Back to Dashboard"
                 >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                    >
                         <path
                             d="M15 18l-6-6 6-6"
                             stroke="currentColor"
@@ -45,7 +50,13 @@
                     id="settings-button"
                     aria-label="Settings"
                 >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                    >
                         <path
                             d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
                             stroke="currentColor"
@@ -68,17 +79,41 @@
         <main id="dashboard-view" class="view dashboard">
             <section
                 class="card status-card"
+                id="status-card"
                 aria-labelledby="status-heading"
                 data-status="ready"
             >
                 <div class="status-card__header">
-                    <h2 id="status-heading" class="card-title">Status</h2>
-                    <div class="status-indicator" role="status" aria-live="polite">
-                        <span class="status-indicator__dot" aria-hidden="true"></span>
-                        <span class="status-indicator__label">Ready</span>
+                    <h2 id="status-heading" class="card-title">
+                        Automation Status
+                    </h2>
+
+                    <div
+                        class="status-indicator"
+                        id="status-indicator"
+                        role="status"
+                        aria-live="polite"
+                    >
+                        <span
+                            class="status-indicator__dot"
+                            aria-hidden="true"
+                        ></span>
+
+                        <span
+                            class="status-indicator__label"
+                            id="status-label"
+                        >
+                            Ready
+                        </span>
                     </div>
                 </div>
-                <p class="status-message">Waiting for your command</p>
+
+                <p
+                    class="status-message"
+                    id="status-message"
+                >
+                    Ready to start your meeting
+                </p>
             </section>
 
             <p
@@ -88,46 +123,120 @@
                 hidden
             ></p>
 
-            <section class="card meeting-card" aria-labelledby="meeting-heading">
-                <h2 id="meeting-heading" class="card-title">Upcoming Meeting</h2>
+            <section
+                class="card meeting-card"
+                aria-labelledby="meeting-heading"
+            >
+                <h2 id="meeting-heading" class="card-title">
+                    Upcoming Meeting
+                </h2>
 
                 <div class="meeting-summary">
-                    <h3 class="meeting-name" id="dashboard-meeting-name">—</h3>
-                    <p class="meeting-time" id="dashboard-meeting-time">—</p>
+                    <h3
+                        class="meeting-name"
+                        id="dashboard-meeting-name"
+                    >
+                        —
+                    </h3>
+
+                    <p
+                        class="meeting-time"
+                        id="dashboard-meeting-time"
+                    >
+                        —
+                    </p>
                 </div>
 
                 <dl class="detail-list">
                     <div class="detail-row">
                         <dt>Platform</dt>
+
                         <dd>
-                            <span class="badge badge--platform" id="dashboard-platform">—</span>
+                            <span
+                                class="badge badge--platform"
+                                id="dashboard-platform"
+                            >
+                                —
+                            </span>
                         </dd>
                     </div>
+
                     <div class="detail-row">
                         <dt>Meeting ID</dt>
-                        <dd class="meeting-id" id="dashboard-meeting-id">—</dd>
+
+                        <dd
+                            class="meeting-id"
+                            id="dashboard-meeting-id"
+                        >
+                            —
+                        </dd>
                     </div>
+
                     <div class="detail-row">
                         <dt>Microphone</dt>
+
                         <dd>
                             <span class="device-state device-state--off">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z" stroke="currentColor" stroke-width="1.75"/>
-                                    <path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v3M8 21h8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-                                    <path d="m3 3 18 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.75"
+                                    />
+                                    <path
+                                        d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v3M8 21h8"
+                                        stroke="currentColor"
+                                        stroke-width="1.75"
+                                        stroke-linecap="round"
+                                    />
+                                    <path
+                                        d="m3 3 18 18"
+                                        stroke="currentColor"
+                                        stroke-width="1.75"
+                                        stroke-linecap="round"
+                                    />
                                 </svg>
                                 Off
                             </span>
                         </dd>
                     </div>
+
                     <div class="detail-row">
                         <dt>Camera</dt>
+
                         <dd>
                             <span class="device-state device-state--off">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M2 8.5V17a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-                                    <path d="M22 8.5 18 11v2l4 2.5V8.5Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
-                                    <path d="m3 3 18 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M2 8.5V17a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1.5"
+                                        stroke="currentColor"
+                                        stroke-width="1.75"
+                                        stroke-linecap="round"
+                                    />
+                                    <path
+                                        d="M22 8.5 18 11v2l4 2.5V8.5Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.75"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="m3 3 18 18"
+                                        stroke="currentColor"
+                                        stroke-width="1.75"
+                                        stroke-linecap="round"
+                                    />
                                 </svg>
                                 Off
                             </span>
@@ -137,32 +246,82 @@
             </section>
 
             <div class="action-area">
-                <button type="button" class="start-button" id="start-now-button">
-                    Start Now
+                <button
+                    type="button"
+                    class="start-button"
+                    id="start-now-button"
+                >
+                    <span
+                        class="button-spinner"
+                        id="start-button-spinner"
+                        aria-hidden="true"
+                        hidden
+                    ></span>
+
+                    <span id="start-button-label">
+                        Start Now
+                    </span>
                 </button>
             </div>
 
-            <section class="card recording-card" aria-labelledby="recording-heading">
-                <h2 id="recording-heading" class="card-title">Recording</h2>
+            <section
+                class="card recording-card"
+                aria-labelledby="recording-heading"
+            >
+                <div class="recording-card__header">
+                    <h2 id="recording-heading" class="card-title">
+                        Recording
+                    </h2>
+
+                    <span
+                        class="recording-state recording-state--idle"
+                        id="recording-state"
+                    >
+                        <span
+                            class="recording-state__dot"
+                            aria-hidden="true"
+                        ></span>
+
+                        <span id="recording-state-label">
+                            Not recording
+                        </span>
+                    </span>
+                </div>
 
                 <dl class="detail-list">
                     <div class="detail-row">
                         <dt>Recording software</dt>
-                        <dd id="dashboard-recording-software">—</dd>
+
+                        <dd id="dashboard-recording-software">
+                            —
+                        </dd>
                     </div>
+
                     <div class="detail-row">
                         <dt>Storage</dt>
+
                         <dd>Local</dd>
                     </div>
+
                     <div class="detail-row">
                         <dt>Recording location</dt>
-                        <dd class="recording-path" id="dashboard-recording-location">—</dd>
+
+                        <dd
+                            class="recording-path"
+                            id="dashboard-recording-location"
+                        >
+                            —
+                        </dd>
                     </div>
                 </dl>
             </section>
         </main>
 
-        <main id="settings-view" class="view settings" hidden>
+        <main
+            id="settings-view"
+            class="view settings"
+            hidden
+        >
             <h1 class="view-title">Settings</h1>
 
             <p
@@ -172,12 +331,26 @@
                 hidden
             ></p>
 
-            <section class="card" aria-labelledby="meeting-config-heading">
-                <h2 id="meeting-config-heading" class="card-title">Meeting Configuration</h2>
+            <section
+                class="card"
+                aria-labelledby="meeting-config-heading"
+            >
+                <h2
+                    id="meeting-config-heading"
+                    class="card-title"
+                >
+                    Meeting Configuration
+                </h2>
 
                 <div class="form-stack">
                     <div class="form-field">
-                        <label class="form-label" for="meeting-name">Meeting Name</label>
+                        <label
+                            class="form-label"
+                            for="meeting-name"
+                        >
+                            Meeting Name
+                        </label>
+
                         <input
                             class="form-input"
                             type="text"
@@ -188,7 +361,13 @@
                     </div>
 
                     <div class="form-field">
-                        <label class="form-label" for="meeting-link">Meeting Link</label>
+                        <label
+                            class="form-label"
+                            for="meeting-link"
+                        >
+                            Meeting Link
+                        </label>
+
                         <input
                             class="form-input"
                             type="url"
@@ -199,7 +378,13 @@
                     </div>
 
                     <div class="form-field">
-                        <label class="form-label" for="meeting-id">Meeting ID</label>
+                        <label
+                            class="form-label"
+                            for="meeting-id"
+                        >
+                            Meeting ID
+                        </label>
+
                         <input
                             class="form-input form-input--mono"
                             type="text"
@@ -210,44 +395,75 @@
                     </div>
 
                     <div class="form-field">
-                        <label class="form-label" for="meeting-passcode">Passcode</label>
+                        <label
+                            class="form-label"
+                            for="meeting-passcode"
+                        >
+                            Passcode
+                        </label>
+
                         <input
                             class="form-input"
                             type="password"
                             id="meeting-passcode"
                             name="meeting-passcode"
-                            placeholder="Demo passcode"
+                            placeholder="Enter meeting passcode"
                             autocomplete="off"
                         >
                     </div>
                 </div>
             </section>
 
-            <section class="card" aria-labelledby="schedule-heading">
-                <h2 id="schedule-heading" class="card-title">Schedule</h2>
+            <section
+                class="card"
+                aria-labelledby="schedule-heading"
+            >
+                <h2 id="schedule-heading" class="card-title">
+                    Schedule
+                </h2>
 
                 <div class="form-stack">
                     <div class="form-field form-field--row">
                         <div class="form-field__text">
-                            <span class="form-label">Automatic Start</span>
-                            <span class="form-hint">Start the meeting automatically at the scheduled time</span>
+                            <span class="form-label">
+                                Automatic Start
+                            </span>
+
+                            <span class="form-hint">
+                                Scheduling is reserved for a future AutoMeet version
+                            </span>
                         </div>
+
                         <label class="toggle">
                             <input
                                 class="toggle__input"
                                 type="checkbox"
-                            id="automatic-start"
-                            name="automatic-start"
-                        >
-                            <span class="toggle__track" aria-hidden="true">
+                                id="automatic-start"
+                                name="automatic-start"
+                                disabled
+                            >
+
+                            <span
+                                class="toggle__track"
+                                aria-hidden="true"
+                            >
                                 <span class="toggle__thumb"></span>
                             </span>
-                            <span class="visually-hidden">Enable automatic start</span>
+
+                            <span class="visually-hidden">
+                                Enable automatic start
+                            </span>
                         </label>
                     </div>
 
                     <div class="form-field">
-                        <label class="form-label" for="meeting-time">Meeting Time</label>
+                        <label
+                            class="form-label"
+                            for="meeting-time"
+                        >
+                            Meeting Time
+                        </label>
+
                         <input
                             class="form-input"
                             type="time"
@@ -257,34 +473,71 @@
                     </div>
 
                     <fieldset class="form-field">
-                        <legend class="form-label">Days of Week</legend>
+                        <legend class="form-label">
+                            Days of Week
+                        </legend>
+
                         <div class="days-grid">
                             <label class="day-option">
-                                <input type="checkbox" name="day-monday" value="monday">
+                                <input
+                                    type="checkbox"
+                                    name="day-monday"
+                                    value="monday"
+                                >
                                 <span>Monday</span>
                             </label>
+
                             <label class="day-option">
-                                <input type="checkbox" name="day-tuesday" value="tuesday">
+                                <input
+                                    type="checkbox"
+                                    name="day-tuesday"
+                                    value="tuesday"
+                                >
                                 <span>Tuesday</span>
                             </label>
+
                             <label class="day-option">
-                                <input type="checkbox" name="day-wednesday" value="wednesday">
+                                <input
+                                    type="checkbox"
+                                    name="day-wednesday"
+                                    value="wednesday"
+                                >
                                 <span>Wednesday</span>
                             </label>
+
                             <label class="day-option">
-                                <input type="checkbox" name="day-thursday" value="thursday">
+                                <input
+                                    type="checkbox"
+                                    name="day-thursday"
+                                    value="thursday"
+                                >
                                 <span>Thursday</span>
                             </label>
+
                             <label class="day-option">
-                                <input type="checkbox" name="day-friday" value="friday">
+                                <input
+                                    type="checkbox"
+                                    name="day-friday"
+                                    value="friday"
+                                >
                                 <span>Friday</span>
                             </label>
+
                             <label class="day-option">
-                                <input type="checkbox" name="day-saturday" value="saturday">
+                                <input
+                                    type="checkbox"
+                                    name="day-saturday"
+                                    value="saturday"
+                                >
                                 <span>Saturday</span>
                             </label>
+
                             <label class="day-option">
-                                <input type="checkbox" name="day-sunday" value="sunday">
+                                <input
+                                    type="checkbox"
+                                    name="day-sunday"
+                                    value="sunday"
+                                >
                                 <span>Sunday</span>
                             </label>
                         </div>
@@ -292,19 +545,45 @@
                 </div>
             </section>
 
-            <section class="card" aria-labelledby="settings-recording-heading">
-                <h2 id="settings-recording-heading" class="card-title">Recording</h2>
+            <section
+                class="card"
+                aria-labelledby="settings-recording-heading"
+            >
+                <h2
+                    id="settings-recording-heading"
+                    class="card-title"
+                >
+                    Recording
+                </h2>
 
                 <div class="form-stack">
                     <div class="form-field">
-                        <label class="form-label" for="recording-software">Recording Software</label>
-                        <select class="form-input" id="recording-software" name="recording-software">
-                            <option value="obs">OBS</option>
+                        <label
+                            class="form-label"
+                            for="recording-software"
+                        >
+                            Recording Software
+                        </label>
+
+                        <select
+                            class="form-input"
+                            id="recording-software"
+                            name="recording-software"
+                        >
+                            <option value="obs">
+                                OBS Studio
+                            </option>
                         </select>
                     </div>
 
                     <div class="form-field">
-                        <label class="form-label" for="recording-location">Recording Location</label>
+                        <label
+                            class="form-label"
+                            for="recording-location"
+                        >
+                            Recording Location
+                        </label>
+
                         <input
                             class="form-input"
                             type="text"
@@ -312,6 +591,10 @@
                             name="recording-location"
                             autocomplete="off"
                         >
+
+                        <span class="form-hint form-hint--block">
+                            AutoMeet currently uses the recording location configured in OBS.
+                        </span>
                     </div>
                 </div>
             </section>
@@ -325,7 +608,11 @@
                     hidden
                 ></p>
 
-                <button type="button" class="start-button" id="save-settings-button">
+                <button
+                    type="button"
+                    class="start-button"
+                    id="save-settings-button"
+                >
                     Save Settings
                 </button>
             </div>
