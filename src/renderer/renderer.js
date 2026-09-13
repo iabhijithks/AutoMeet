@@ -92,6 +92,19 @@ function initDashboard() {
 }
 
 function initSettings() {
+    const meetingLinkInput = document.getElementById("meeting-link");
+    const meetingIdInput = document.getElementById("meeting-id");
+
+    if (meetingLinkInput && meetingIdInput) {
+        meetingLinkInput.addEventListener("input", () => {
+            const extractedMeetingId = extractMeetingId(meetingLinkInput.value);
+
+            if (extractedMeetingId) {
+                meetingIdInput.value = extractedMeetingId;
+            }
+        });
+    }
+
     const saveButton = document.getElementById("save-settings-button");
 
     if (saveButton) {
@@ -130,11 +143,26 @@ async function loadSettingsForm() {
 
 function applyDashboardConfig(config) {
     setTextContent("dashboard-meeting-name", config.meeting.name || "—");
-    setTextContent("dashboard-meeting-time", formatScheduleDisplay(config.schedule));
-    setTextContent("dashboard-platform", detectPlatform(config.meeting.link));
-    setTextContent("dashboard-meeting-id", maskMeetingId(config.meeting.meetingId));
-    setTextContent("dashboard-recording-software", formatRecordingSoftware(config.recording.software));
-    setTextContent("dashboard-recording-location", config.recording.location || "—");
+    setTextContent(
+        "dashboard-meeting-time",
+        formatScheduleDisplay(config.schedule)
+    );
+    setTextContent(
+        "dashboard-platform",
+        detectPlatform(config.meeting.link)
+    );
+    setTextContent(
+        "dashboard-meeting-id",
+        maskMeetingId(config.meeting.meetingId)
+    );
+    setTextContent(
+        "dashboard-recording-software",
+        formatRecordingSoftware(config.recording.software)
+    );
+    setTextContent(
+        "dashboard-recording-location",
+        config.recording.location || "—"
+    );
 }
 
 function clearDashboardConfig() {
@@ -173,7 +201,9 @@ function collectSettingsForm() {
             passcode: getInputValue("meeting-passcode")
         },
         schedule: {
-            enabled: Boolean(document.getElementById("automatic-start")?.checked),
+            enabled: Boolean(
+                document.getElementById("automatic-start")?.checked
+            ),
             time: getInputValue("meeting-time"),
             days: getSelectedDays()
         },
@@ -188,7 +218,9 @@ function getSelectedDays() {
     const selectedDays = [];
 
     for (const checkboxName of DAY_CHECKBOX_NAMES) {
-        const checkbox = document.querySelector(`input[name="${checkboxName}"]`);
+        const checkbox = document.querySelector(
+            `input[name="${checkboxName}"]`
+        );
 
         if (checkbox?.checked) {
             selectedDays.push(checkbox.value);
@@ -202,7 +234,9 @@ function setDayCheckboxes(days) {
     const selectedDays = new Set(Array.isArray(days) ? days : []);
 
     for (const checkboxName of DAY_CHECKBOX_NAMES) {
-        const checkbox = document.querySelector(`input[name="${checkboxName}"]`);
+        const checkbox = document.querySelector(
+            `input[name="${checkboxName}"]`
+        );
 
         if (checkbox) {
             checkbox.checked = selectedDays.has(checkbox.value);
@@ -210,8 +244,34 @@ function setDayCheckboxes(days) {
     }
 }
 
-function handleStartNowClick() {
-    console.log("Start Now clicked — automation not yet implemented.");
+async function handleStartNowClick() {
+    const startButton = document.getElementById("start-now-button");
+
+    if (startButton) {
+        startButton.disabled = true;
+        startButton.textContent = "Starting...";
+    }
+
+    console.log("Start Now clicked.");
+
+    try {
+        const result = await window.autoMeetAPI.startMeeting();
+
+        console.log("Meeting automation started:", result);
+
+        if (result?.status === "recording") {
+            console.log("AutoMeet is now recording.");
+        }
+    } catch (error) {
+        console.error("Meeting automation failed:", error);
+
+        alert(getErrorMessage(error, "Unable to start the meeting."));
+    } finally {
+        if (startButton) {
+            startButton.disabled = false;
+            startButton.textContent = "Start Now";
+        }
+    }
 }
 
 async function handleSaveSettingsClick() {
@@ -246,7 +306,11 @@ function showSaveFeedback(message, type) {
 
     saveFeedback.textContent = message;
     saveFeedback.hidden = false;
-    saveFeedback.classList.remove("save-feedback--success", "save-feedback--error");
+
+    saveFeedback.classList.remove(
+        "save-feedback--success",
+        "save-feedback--error"
+    );
 
     if (type === "success") {
         saveFeedback.classList.add("save-feedback--success");
@@ -261,7 +325,11 @@ function showSaveFeedback(message, type) {
     saveFeedbackTimeout = setTimeout(() => {
         saveFeedback.hidden = true;
         saveFeedback.textContent = "";
-        saveFeedback.classList.remove("save-feedback--success", "save-feedback--error");
+
+        saveFeedback.classList.remove(
+            "save-feedback--success",
+            "save-feedback--error"
+        );
     }, 4000);
 }
 
@@ -379,6 +447,7 @@ function formatScheduleDisplay(schedule) {
     }
 
     const dayLabels = days.map((day) => DAY_LABELS[day] || day);
+
     return `${dayLabels.join(", ")} · ${timeLabel}`;
 }
 
@@ -395,4 +464,15 @@ function formatTimeDisplay(timeValue) {
     const hour12 = hours % 12 || 12;
 
     return `${hour12}:${minutes} ${period}`;
+}
+
+function extractMeetingId(meetingLink) {
+    try {
+        const url = new URL(meetingLink);
+        const match = url.pathname.match(/^\/j\/(\d+)/);
+
+        return match ? match[1] : "";
+    } catch {
+        return "";
+    }
 }

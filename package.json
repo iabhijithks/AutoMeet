@@ -16,5 +16,8 @@
   "type": "commonjs",
   "devDependencies": {
     "electron": "^43.2.0"
+  },
+  "dependencies": {
+    "obs-websocket-js": "^5.0.8"
   }
 }
