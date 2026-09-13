@@ -2,11 +2,9 @@
     --color-bg: #f3f4f6;
     --color-surface: #ffffff;
     --color-border: #e5e7eb;
-
     --color-text: #111827;
     --color-text-muted: #6b7280;
     --color-text-subtle: #9ca3af;
-
     --color-primary: #2563eb;
     --color-primary-hover: #1d4ed8;
     --color-primary-active: #1e40af;
@@ -780,6 +778,93 @@ fieldset.form-field > .form-label {
     outline-offset: 2px;
 }
 
+/* Schedule - Coming Soon */
+
+.schedule-card {
+    overflow: hidden;
+}
+
+.schedule-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.schedule-header .card-title {
+    margin-bottom: 5px;
+}
+
+.schedule-description {
+    margin: 0;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+.coming-soon-badge {
+    flex-shrink: 0;
+    padding: 5px 9px;
+    border: 1px solid var(--color-progress-border);
+    border-radius: 999px;
+    background: var(--color-progress-bg);
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.schedule-coming-soon {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 18px 0 20px;
+    padding: 14px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: #f9fafb;
+}
+
+.schedule-coming-soon strong {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.schedule-coming-soon span {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+.schedule-controls {
+    opacity: 0.55;
+}
+
+.form-field--disabled {
+    opacity: 0.8;
+}
+
+.form-field--disabled .form-label,
+.form-field--disabled .form-hint {
+    color: var(--color-text-muted);
+}
+
+.form-field--disabled .day-option {
+    cursor: not-allowed;
+    background: #f9fafb;
+}
+
+.form-field--disabled .day-option input {
+    cursor: not-allowed;
+}
+
+.form-field--disabled .day-option:has(input:checked) {
+    border-color: var(--color-border);
+    background: #f9fafb;
+}
+
 /* Save feedback */
 
 .save-feedback {
@@ -869,5 +954,13 @@ fieldset.form-field > .form-label {
 
     .days-grid {
         grid-template-columns: 1fr;
+    }
+
+    .schedule-header {
+        flex-direction: column;
+    }
+
+    .coming-soon-badge {
+        align-self: flex-start;
     }
 }

@@ -65,7 +65,7 @@
                             stroke-linejoin="round"
                         />
                         <path
-                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"
                             stroke="currentColor"
                             stroke-width="1.75"
                             stroke-linecap="round"
@@ -414,27 +414,60 @@
                 </div>
             </section>
 
+            <!--
+                Scheduling is intentionally disabled for AutoMeet v1.
+                The existing IDs are preserved because renderer.js
+                still reads the schedule configuration.
+            -->
             <section
-                class="card"
+                class="card schedule-card"
                 aria-labelledby="schedule-heading"
             >
-                <h2 id="schedule-heading" class="card-title">
-                    Schedule
-                </h2>
+                <div class="schedule-header">
+                    <div>
+                        <h2
+                            id="schedule-heading"
+                            class="card-title"
+                        >
+                            Schedule
+                        </h2>
 
-                <div class="form-stack">
-                    <div class="form-field form-field--row">
+                        <p class="schedule-description">
+                            Automatically join and record your scheduled meetings.
+                        </p>
+                    </div>
+
+                    <span class="coming-soon-badge">
+                        Coming Soon
+                    </span>
+                </div>
+
+                <div class="schedule-coming-soon">
+                    <strong>
+                        Automatic scheduling is coming in AutoMeet v1.1.
+                    </strong>
+
+                    <span>
+                        For now, use Start Now from the dashboard to begin a meeting manually.
+                    </span>
+                </div>
+
+                <div class="form-stack schedule-controls">
+                    <div class="form-field form-field--row form-field--disabled">
                         <div class="form-field__text">
                             <span class="form-label">
                                 Automatic Start
                             </span>
 
                             <span class="form-hint">
-                                Scheduling is reserved for a future AutoMeet version
+                                Enable automatic meeting startup when scheduling becomes available.
                             </span>
                         </div>
 
-                        <label class="toggle">
+                        <label
+                            class="toggle"
+                            aria-disabled="true"
+                        >
                             <input
                                 class="toggle__input"
                                 type="checkbox"
@@ -456,7 +489,7 @@
                         </label>
                     </div>
 
-                    <div class="form-field">
+                    <div class="form-field form-field--disabled">
                         <label
                             class="form-label"
                             for="meeting-time"
@@ -469,10 +502,11 @@
                             type="time"
                             id="meeting-time"
                             name="meeting-time"
+                            disabled
                         >
                     </div>
 
-                    <fieldset class="form-field">
+                    <fieldset class="form-field form-field--disabled">
                         <legend class="form-label">
                             Days of Week
                         </legend>
@@ -483,6 +517,7 @@
                                     type="checkbox"
                                     name="day-monday"
                                     value="monday"
+                                    disabled
                                 >
                                 <span>Monday</span>
                             </label>
@@ -492,6 +527,7 @@
                                     type="checkbox"
                                     name="day-tuesday"
                                     value="tuesday"
+                                    disabled
                                 >
                                 <span>Tuesday</span>
                             </label>
@@ -501,6 +537,7 @@
                                     type="checkbox"
                                     name="day-wednesday"
                                     value="wednesday"
+                                    disabled
                                 >
                                 <span>Wednesday</span>
                             </label>
@@ -510,6 +547,7 @@
                                     type="checkbox"
                                     name="day-thursday"
                                     value="thursday"
+                                    disabled
                                 >
                                 <span>Thursday</span>
                             </label>
@@ -519,6 +557,7 @@
                                     type="checkbox"
                                     name="day-friday"
                                     value="friday"
+                                    disabled
                                 >
                                 <span>Friday</span>
                             </label>
@@ -528,6 +567,7 @@
                                     type="checkbox"
                                     name="day-saturday"
                                     value="saturday"
+                                    disabled
                                 >
                                 <span>Saturday</span>
                             </label>
@@ -537,6 +577,7 @@
                                     type="checkbox"
                                     name="day-sunday"
                                     value="sunday"
+                                    disabled
                                 >
                                 <span>Sunday</span>
                             </label>
