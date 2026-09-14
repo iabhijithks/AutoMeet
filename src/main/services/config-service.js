@@ -20,7 +20,7 @@ function getDefaultConfig() {
         meeting: {
             name: "Web Development",
             link: "https://zoom.us/j/00000000000",
-            meetingId: "829 1234 5678",
+            meetingId: "123 1234 1234",
             passcode: ""
         },
         schedule: {
