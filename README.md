@@ -281,6 +281,8 @@ see:
 
 AutoMeet is intended for legitimate personal and educational automation.
 
+AutoMeet does not provide a platform for distributing class recordings. Recordings remain under the user's local OBS configuration. Users are responsible for complying with applicable institutional policies and obtaining any required permission or consent for recording.
+
 Users are responsible for:
 
 - Following Zoom's terms and policies
@@ -291,6 +293,7 @@ Users are responsible for:
 
 Recording laws and organizational policies may vary by location.
 
+AutoMeet is not intended to facilitate unauthorized distribution of meeting recordings. Users should keep recordings private unless they have permission to share them.
 ---
 
 # 📜 License
