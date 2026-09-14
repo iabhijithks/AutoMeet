@@ -3,21 +3,47 @@
   "version": "1.0.0",
   "description": "AutoMeet by Abhijith K S",
   "main": "src/main/main.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "electron",
+    "zoom",
+    "obs",
+    "automation",
+    "desktop-app"
+  ],
+  "author": "Abhijith K S",
+  "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^43.2.0"
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3"
   },
   "dependencies": {
     "obs-websocket-js": "^5.0.8"
+  },
+  "build": {
+    "appId": "com.abhijithks.automeet",
+    "productName": "AutoMeet",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
   }
 }

@@ -18,13 +18,13 @@ const CONFIG_FILE_NAME = "config.json";
 function getDefaultConfig() {
     return {
         meeting: {
-            name: "Web Development",
-            link: "https://zoom.us/j/00000000000",
-            meetingId: "123 1234 1234",
+            name: "",
+            link: "",
+            meetingId: "",
             passcode: ""
         },
         schedule: {
-            enabled: true,
+            enabled: false,
             time: "19:00",
             days: ["monday", "tuesday", "wednesday", "thursday", "friday"]
         },

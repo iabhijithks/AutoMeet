@@ -12,3 +12,5 @@ recordings/
 
 # Personal configuration
 config.json
+
+dist/
